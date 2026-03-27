@@ -13,11 +13,11 @@ export type Product = {
   id: number;
   title: string;
   price: number;
-  image: string;
+  image?: string | null; 
   categoryId: number;
   shopId: number;
   category?: Category;
-  rating: number;
+  rating?: number; 
 };
 
 export type CartItem = Product & {
@@ -34,6 +34,7 @@ export type UserInfo = {
 export type UserState = {
   info: UserInfo;
   orderHistory: number[];
+  lastOrderId: number | null; 
 };
 
 export type CreateOrderDto = {
@@ -47,6 +48,7 @@ export type CreateOrderDto = {
   }[];
   totalPrice: number;
 };
+
 export type OrderHistoryItem = {
   id: number;
   createdAt: string;
@@ -59,8 +61,9 @@ export type OrderHistoryItem = {
     item: {
       title: string;
       price: number;
-      image: string;
+      image: string | null;
     };
   }[];
 };
+
 export type HistoryResponse = OrderHistoryItem[];

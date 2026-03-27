@@ -10,26 +10,47 @@ export const orderSchema = yup
   .object({
     userName: yup
       .string()
+      .trim()
       .required("Name is required")
       .matches(NAME_REGEX, "Name contains invalid characters"),
 
     userEmail: yup
       .string()
+      .trim()
       .required("Email is required")
       .matches(EMAIL_REGEX, "Invalid email format"),
 
     userPhone: yup
       .string()
+      .trim()
       .required("Phone is required")
       .matches(PHONE_REGEX, "Phone must be 10-15 digits"),
 
     address: yup
       .string()
+      .trim()
       .required("Address is required")
-      .matches(
-        ADDRESS_REGEX,
-        "Address is too short or contains invalid characters",
+      .min(5, "Address must be at least 5 characters")
+      .matches(ADDRESS_REGEX, "Address contains invalid characters"),
+
+    items: yup
+      .array()
+      .of(
+        yup.object({
+          itemId: yup.number().integer().positive().required(),
+          quantity: yup
+            .number()
+            .integer()
+            .min(1, "Min quantity is 1")
+            .required(),
+        }),
       )
-      .min(5, "Address must be at least 5 characters"),
+      .min(1, "Cart cannot be empty")
+      .required("Items are required"),
+
+    totalPrice: yup
+      .number()
+      .positive("Total price must be positive")
+      .required("Total price is required"),
   })
   .required();

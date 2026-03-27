@@ -52,5 +52,29 @@ pids
 *.seed
 *.pid.lock
 
+
+# Prisma specific
+*.db
+*.db-journal
+schema.prisma.backup
+
+# TypeScript and Linting cache
+*.tsbuildinfo
+.eslintcache
+
+# Ensure example env is tracked
+*.env
+!.env.example
+
+# Swap/Temporary files
+*.swp
+# Data files (Private)
+PrefilData.json
+PrefilTagsData.json
+PrefilTagsToJobTemplatesData.json
+
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+/generated/prisma
