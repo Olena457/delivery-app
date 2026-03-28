@@ -1,72 +1,3 @@
-// export type Category = {
-//   id: number;
-//   name: string;
-// };
-
-// export type Shop = {
-//   id: number;
-//   name: string;
-//   description?: string;
-// };
-
-// export type Product = {
-//   id: number;
-//   title: string;
-//   price: number;
-//   image?: string | null; 
-//   categoryId: number;
-//   shopId: number;
-//   category?: Category;
-//   rating?: number; 
-// };
-
-// export type CartItem = Product & {
-//   quantity: number;
-// };
-
-// export type UserInfo = {
-//   userName: string;
-//   userEmail: string;
-//   userPhone: string;
-//   address: string;
-// } | null;
-
-// export type UserState = {
-//   info: UserInfo;
-//   orderHistory: number[];
-//   lastOrderId: number | null; 
-// };
-
-// export type CreateOrderDto = {
-//   userName: string;
-//   userEmail: string;
-//   userPhone: string;
-//   address: string;
-//   items: {
-//     itemId: number;
-//     quantity: number;
-//   }[];
-//   totalPrice: number;
-// };
-
-// export type OrderHistoryItem = {
-//   id: number;
-//   createdAt: string;
-//   totalPrice: number;
-//   status: string;
-//   address: string;
-//   items: {
-//     id: number;
-//     quantity: number;
-//     item: {
-//       title: string;
-//       price: number;
-//       image: string | null;
-//     };
-//   }[];
-// };
-
-// export type HistoryResponse = OrderHistoryItem[];
 export type Category = {
   id: number;
   name: string;
@@ -75,7 +6,11 @@ export type Category = {
 export type Shop = {
   id: number;
   name: string;
-  description?: string;
+  description?: string | null;
+  rating: number;
+  _count?: {
+    reviews: number;
+  };
 };
 
 export type Product = {
@@ -86,10 +21,6 @@ export type Product = {
   categoryId: number;
   shopId: number;
   category?: Category;
-  rating?: number;
-  _count?: {
-    reviews: number;
-  };
 };
 
 export type CategoryFilter = Category & {
@@ -114,16 +45,24 @@ export type UserState = {
   lastOrderId: number | null;
 };
 
+export type OrderLineInput = {
+  productId: number;
+  quantity: number;
+};
+
 export type CreateOrderDto = {
   userName: string;
   userEmail: string;
   userPhone: string;
   address: string;
-  items: {
-    itemId: number;
-    quantity: number;
-  }[];
+  items: OrderLineInput[];
   totalPrice: number;
+};
+
+export type OrderHistoryLine = {
+  id: number;
+  quantity: number;
+  product: Product;
 };
 
 export type OrderHistoryItem = {
@@ -132,16 +71,21 @@ export type OrderHistoryItem = {
   totalPrice: number;
   status: string;
   address: string;
-  items: {
-    id: number;
-    quantity: number;
-    item: {
-      title: string;
-      price: number;
-      image: string | null;
-      category?: Category;
-    };
-  }[];
+  items: OrderHistoryLine[];
 };
 
 export type HistoryResponse = OrderHistoryItem[];
+
+export type PaginatedProducts = {
+  data: Product[];
+  total: number;
+  page: number;
+  limit: number;
+  hasMore: boolean;
+};
+
+export type ProductSort =
+  | "price_asc"
+  | "price_desc"
+  | "title_asc"
+  | "title_desc";

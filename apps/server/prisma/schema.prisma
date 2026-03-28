@@ -21,42 +21,43 @@ model User {
 }
 
 model Shop {
-  id          Int     @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
   description String?
-  items       Item[]
+  rating      Float     @default(1.0)
+  products    Product[]
+  reviews     Review[]
 
   @@map("shops")
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  items Item[]
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
 
   @@map("categories")
 }
 
-model Item {
-  id          Int         @id @default(autoincrement())
-  title       String
-  price       Float
-  image       String?
-  categoryId  Int         @map("category_id")
-  category    Category    @relation(fields: [categoryId], references: [id])
-  shopId      Int         @map("shop_id")
-  shop        Shop        @relation(fields: [shopId], references: [id])
-  reviews     Review[]
-  orderItems  OrderItem[]
+model Product {
+  id         Int         @id @default(autoincrement())
+  title      String
+  price      Float
+  image      String?
+  categoryId Int         @map("category_id")
+  category   Category    @relation(fields: [categoryId], references: [id])
+  shopId     Int         @map("shop_id")
+  shop       Shop        @relation(fields: [shopId], references: [id])
+  orderItems OrderItem[]
 
-  @@map("items")
+  @@map("products")
 }
 
 model Review {
   id        Int      @id @default(autoincrement())
   rating    Int
-  itemId    Int      @map("item_id")
-  item      Item     @relation(fields: [itemId], references: [id])
+  shopId    Int      @map("shop_id")
+  shop      Shop     @relation(fields: [shopId], references: [id])
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("reviews")
@@ -64,8 +65,8 @@ model Review {
 
 model Order {
   id         Int         @id @default(autoincrement())
-  userId     Int        @map("user_id")
-  user       User       @relation(fields: [userId], references: [id])
+  userId     Int         @map("user_id")
+  user       User        @relation(fields: [userId], references: [id])
   userName   String      @map("user_name")
   userEmail  String      @map("user_email")
   userPhone  String      @map("user_phone")
@@ -79,12 +80,12 @@ model Order {
 }
 
 model OrderItem {
-  id       Int   @id @default(autoincrement())
-  orderId  Int   @map("order_id")
-  order    Order @relation(fields: [orderId], references: [id])
-  itemId   Int   @map("item_id")
-  item     Item  @relation(fields: [itemId], references: [id])
-  quantity Int
+  id        Int     @id @default(autoincrement())
+  orderId   Int     @map("order_id")
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
 
   @@map("order_items")
 }

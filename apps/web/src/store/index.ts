@@ -9,7 +9,9 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+// Vite + CJS interop: `lib/storage` can resolve without a proper default export;
+// `es/storage` is ESM and always exposes getItem/setItem correctly.
+import storage from "redux-persist/es/storage";
 import { shopApi } from "./api/shopApi"; 
 import cartReducer from "./slices/cartSlice"; 
 import userReducer from "./slices/userSlice"; 

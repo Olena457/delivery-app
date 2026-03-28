@@ -11,7 +11,7 @@ import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Provider store={store}> 
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <ThemeProvider theme={theme}>
@@ -20,6 +20,6 @@ createRoot(document.getElementById("root")!).render(
           </ThemeProvider>
         </BrowserRouter>
       </PersistGate>
-     </Provider>
+    </Provider>
   </StrictMode>,
 );

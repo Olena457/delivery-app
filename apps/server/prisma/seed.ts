@@ -9,7 +9,7 @@ async function main() {
   await prisma.review.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();
-  await prisma.item.deleteMany();
+  await prisma.product.deleteMany();
   await prisma.category.deleteMany();
   await prisma.shop.deleteMany();
   await prisma.user.deleteMany();
@@ -31,23 +31,38 @@ async function main() {
 
   const shops: Shop[] = [];
   for (let i = 0; i < 5; i++) {
+    const randomRating = faker.number.float({
+      min: 1,
+      max: 5,
+      fractionDigits: 1,
+    });
     const shop = await prisma.shop.create({
       data: {
         name: faker.company.name() + ' Kitchen',
         description: faker.commerce.productDescription(),
+        rating: randomRating,
       },
     });
     shops.push(shop);
   }
 
   for (const shop of shops) {
-    console.log(`Adding items to: ${shop.name}`);
+    console.log(`Adding products and reviews to: ${shop.name}`);
+
+    const reviewCount = faker.number.int({ min: 3, max: 8 });
+    for (let r = 0; r < reviewCount; r++) {
+      await prisma.review.create({
+        data: {
+          rating: faker.number.int({ min: 1, max: 5 }),
+          shopId: shop.id,
+        },
+      });
+    }
 
     for (let j = 0; j < 20; j++) {
       const category = categories[j % categories.length];
 
       let title = 'Delicious Item';
-
       if (category.name === 'Main Dishes') {
         title = faker.commerce.productName();
       } else if (category.name === 'Desserts') {
@@ -55,30 +70,21 @@ async function main() {
       } else if (category.name === 'Drinks') {
         title = faker.commerce.product() + ' Juice';
       }
+
       const imageUrl =
         j % 10 === 0
           ? null
           : `https://loremflickr.com/800/600/${category.search}?lock=${faker.number.int(1000)}`;
 
-      const item = await prisma.item.create({
+      await prisma.product.create({
         data: {
-          title: title,
+          title,
           price: parseFloat(faker.commerce.price({ min: 150, max: 850 })),
           image: imageUrl,
           shopId: shop.id,
           categoryId: category.id,
         },
       });
-
-      const reviewCount = faker.number.int({ min: 2, max: 5 });
-      for (let r = 0; r < reviewCount; r++) {
-        await prisma.review.create({
-          data: {
-            rating: faker.number.int({ min: 2, max: 5 }),
-            itemId: item.id,
-          },
-        });
-      }
     }
   }
 

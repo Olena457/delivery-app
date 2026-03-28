@@ -37,7 +37,7 @@ export const orderSchema = yup
       .array()
       .of(
         yup.object({
-          itemId: yup.number().integer().positive().required(),
+          productId: yup.number().integer().positive().required(),
           quantity: yup
             .number()
             .integer()
@@ -54,3 +54,11 @@ export const orderSchema = yup
       .required("Total price is required"),
   })
   .required();
+
+/** Form fields only — cart lines and total are supplied on submit */
+export const checkoutFieldsSchema = orderSchema.pick([
+  "userName",
+  "userEmail",
+  "userPhone",
+  "address",
+]);
