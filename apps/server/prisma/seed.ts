@@ -1,0 +1,95 @@
+import { PrismaClient, Category, Shop } from '@prisma/client';
+import { faker } from '@faker-js/faker';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  console.log('Starting seed...');
+
+  await prisma.review.deleteMany();
+  await prisma.orderItem.deleteMany();
+  await prisma.order.deleteMany();
+  await prisma.item.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.shop.deleteMany();
+  await prisma.user.deleteMany();
+
+  const categoriesData = [
+    { name: 'Main Dishes', search: 'food,dinner,meat' },
+    { name: 'Desserts', search: 'cake,sweet,dessert' },
+    { name: 'Drinks', search: 'beverage,drink,coffee' },
+  ];
+
+  const categories: (Category & { search: string })[] = [];
+
+  for (const cat of categoriesData) {
+    const createdCat = await prisma.category.create({
+      data: { name: cat.name },
+    });
+    categories.push({ ...createdCat, search: cat.search });
+  }
+
+  const shops: Shop[] = [];
+  for (let i = 0; i < 5; i++) {
+    const shop = await prisma.shop.create({
+      data: {
+        name: faker.company.name() + ' Kitchen',
+        description: faker.commerce.productDescription(),
+      },
+    });
+    shops.push(shop);
+  }
+
+  for (const shop of shops) {
+    console.log(`Adding items to: ${shop.name}`);
+
+    for (let j = 0; j < 20; j++) {
+      const category = categories[j % categories.length];
+
+      let title = 'Delicious Item';
+
+      if (category.name === 'Main Dishes') {
+        title = faker.commerce.productName();
+      } else if (category.name === 'Desserts') {
+        title = faker.commerce.product() + ' Cake';
+      } else if (category.name === 'Drinks') {
+        title = faker.commerce.product() + ' Juice';
+      }
+      const imageUrl =
+        j % 10 === 0
+          ? null
+          : `https://loremflickr.com/800/600/${category.search}?lock=${faker.number.int(1000)}`;
+
+      const item = await prisma.item.create({
+        data: {
+          title: title,
+          price: parseFloat(faker.commerce.price({ min: 150, max: 850 })),
+          image: imageUrl,
+          shopId: shop.id,
+          categoryId: category.id,
+        },
+      });
+
+      const reviewCount = faker.number.int({ min: 2, max: 5 });
+      for (let r = 0; r < reviewCount; r++) {
+        await prisma.review.create({
+          data: {
+            rating: faker.number.int({ min: 2, max: 5 }),
+            itemId: item.id,
+          },
+        });
+      }
+    }
+  }
+
+  console.log('Seed completed successfully!');
+}
+
+main()
+  .catch((e) => {
+    console.error('Seed error:', e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
