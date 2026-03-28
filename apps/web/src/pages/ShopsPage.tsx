@@ -435,6 +435,7 @@
 //     </Box>
 //   );
 // }
+// second version___________________________________
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import {
   Box,
@@ -489,7 +490,6 @@ export function ShopsPage() {
 
   const { data: categories = [] } = useGetCategoriesQuery();
 
-  // Використовуємо useMemo для визначення активного магазину
   const activeShopId = useMemo(() => {
     return selectedShopId ?? (shops.length > 0 ? shops[0].id : null);
   }, [selectedShopId, shops]);

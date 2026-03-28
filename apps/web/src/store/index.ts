@@ -9,24 +9,24 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-// Vite + CJS interop: `lib/storage` can resolve without a proper default export;
-// `es/storage` is ESM and always exposes getItem/setItem correctly.
 import storage from "redux-persist/es/storage";
 import { shopApi } from "./api/shopApi"; 
 import cartReducer from "./slices/cartSlice"; 
 import userReducer from "./slices/userSlice"; 
-
-const rootPersistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["cart", "user"], 
-};
+import ordersReducer from "./slices/ordersSlice";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
   user: userReducer,
+  orders: ordersReducer, 
   [shopApi.reducerPath]: shopApi.reducer,
 });
+
+const rootPersistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["cart", "user", "orders"], 
+};
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 

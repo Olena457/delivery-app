@@ -62,7 +62,7 @@ export function CartPage() {
                     {item.price.toFixed(2)} ₴ each
                   </Typography>
                 </Box>
-                <TextField
+                {/* <TextField
                   label="Qty"
                   type="number"
                   size="small"
@@ -75,7 +75,29 @@ export function CartPage() {
                     }
                   }}
                   sx={{ width: 88 }}
+                /> */}
+                <TextField
+                  label="Кількість"
+                  type="number"
+                  size="small"
+                  value={item.quantity}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "") return; 
+                    let q = Number(val);
+                    if (Number.isNaN(q)) return;
+                    if (q < 1) q = 1; 
+                    dispatch(updateQuantity({ id: item.id, quantity: q }));
+                  }}
+                  sx={{ width: 88 }}
+                  slotProps={{
+                    htmlInput: {
+                      min: 1,
+                      step: 1, 
+                    },
+                  }}
                 />
+
                 <Typography sx={{ minWidth: 90, alignSelf: "center" }}>
                   {(item.price * item.quantity).toFixed(2)} ₴
                 </Typography>
