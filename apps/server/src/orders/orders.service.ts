@@ -88,7 +88,10 @@ export class OrdersService {
 
     if (itemsPayload?.length) {
       const computed = await this.computeTotalFromLines(itemsPayload);
-      if (dto.totalPrice !== undefined && Math.abs(computed - dto.totalPrice) > 0.01) {
+      if (
+        dto.totalPrice !== undefined &&
+        Math.abs(computed - dto.totalPrice) > 0.01
+      ) {
         throw new BadRequestException(
           'totalPrice does not match line items and catalog prices',
         );

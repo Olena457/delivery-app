@@ -10,7 +10,7 @@ import {
   Chip,
 } from "@mui/material";
 import type { Product } from "../../types/types";
-import defaultProductImage from "../../assets/bart.jpg";
+import defaultProductImage from "../../assets/meal.jpg";
 
 type Props = {
   product: Product;

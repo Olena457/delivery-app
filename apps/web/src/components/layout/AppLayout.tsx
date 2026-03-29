@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { ShoppingCart, Store, History } from "lucide-react";
 import { useAppSelector } from "../../store/hooks";
+import logo from "../../assets/logo.svg";
 
 export function AppLayout() {
   const location = useLocation();
@@ -48,8 +49,21 @@ export function AppLayout() {
               width: { xs: "100%", sm: "auto" },
               textAlign: { xs: "center", sm: "left" },
               fontSize: { xs: "1.25rem", sm: "1.5rem" },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: { xs: "center", sm: "flex-start" },
+              gap: 1.5,
             }}
           >
+            <Box
+              component="img"
+              src={logo}
+              alt="Logo"
+              sx={{
+                width: { xs: 32, md: 48 },
+                height: "auto",
+              }}
+            />
             Delivery App
           </Typography>
 
