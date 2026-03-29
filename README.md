@@ -21,19 +21,19 @@ This project is implemented as a **Monorepo**, containing both the frontend and 
 
 ### Frontend (Client)
 
-* **React 19** & **Vite** — Fast UI rendering and modern build tool.
-* **Redux Toolkit & RTK Query** — Advanced state management and efficient API data fetching/caching.
-* **Material UI (MUI)** — Component library for a polished, professional look.
-* **React Hook Form & Yup** — Robust form handling and client-side validation.
-* **TypeScript** — For type-safe and reliable code.
+* **React 19** & **Vite** : Fast UI rendering and modern build tool.
+* **Redux Toolkit & RTK Query** : Advanced state management and efficient API data fetching/caching.
+* **Material UI (MUI)** : Component library for a polished, professional look.
+* **React Hook Form & Yup** : Robust form handling and client-side validation.
+* **TypeScript** : For type-safe and reliable code.
 
 ### Backend (Server)
 
-* **NestJS** — Progressive Node.js framework for scalable server-side applications.
-* **PostgreSQL** — Powerful relational database for reliable data storage.
-* **Prisma ORM** — Type-safe database client and migration tool.
-* **Swagger API** — Automated API documentation and testing interface.
-* **Faker.js** — For generating high-quality seed data.
+* **NestJS** : Progressive Node.js framework for scalable server-side applications.
+* **PostgreSQL** : Powerful relational database for reliable data storage.
+* **Prisma ORM** : Type-safe database client and migration tool.
+* **Swagger API** : Automated API documentation and testing interface.
+* **Faker.js** : For generating high-quality seed data.
 
 ---
 
