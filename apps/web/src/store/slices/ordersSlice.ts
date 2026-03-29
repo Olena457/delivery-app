@@ -15,7 +15,7 @@ const ordersSlice = createSlice({
   initialState,
   reducers: {
     setOrders: (state, action: PayloadAction<OrderHistoryItem[]>) => {
-      state.history = action.payload.slice(0, 6); // тільки останні 6
+      state.history = action.payload.slice(0, 6); // only keep the 6 last orders
     },
     addOrder: (state, action: PayloadAction<OrderHistoryItem>) => {
       state.history.unshift(action.payload);

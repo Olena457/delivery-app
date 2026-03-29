@@ -25,7 +25,23 @@ export function ShopList({ shops, selectedId, onSelect }: Props) {
           selected={selectedId === shop.id}
           onClick={() => onSelect(shop.id)}
           alignItems="flex-start"
-          sx={{ borderRadius: 1, mb: 0.5 }}
+          sx={{
+            borderRadius: 1,
+            mb: 1,
+            border: "1px solid",
+            borderColor: selectedId === shop.id ? "primary.main" : "divider",
+            transition: "border-color 0.2s ease-in-out",
+            "&:hover": {
+              borderColor: selectedId === shop.id ? "primary.main" : "grey.400",
+            },
+            "&.Mui-selected": {
+              bgcolor: "rgba(211, 47, 47, 0.04)",
+              "&:hover": {
+                bgcolor: "rgba(211, 47, 47, 0.08)",
+              },
+            },
+          }}
+
         >
           <ListItemText
             primary={shop.name}

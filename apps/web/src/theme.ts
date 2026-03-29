@@ -1,3 +1,4 @@
+
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -12,20 +13,10 @@ const theme = createTheme({
       sm: 600,
       md: 900,
       lg: 1200,
-      xl: 1560,
+      xl: 1520,
     },
   },
-  components: {
-    MuiContainer: {
-      styleOverrides: {
-        root: {
-          "@media (min-width: 1560px)": {
-            maxWidth: "1560px !important",
-          },
-        },
-      },
-    },
-  },
+  
 });
 
 export default theme;

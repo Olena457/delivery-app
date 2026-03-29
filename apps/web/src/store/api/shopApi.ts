@@ -1,3 +1,4 @@
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
   CreateOrderDto,
@@ -60,8 +61,26 @@ export const shopApi = createApi({
 
     getProducts: builder.query<PaginatedProducts, ProductsQuery>({
       query: (q) => `/products${productsQueryString(q)}`,
+      serializeQueryArgs: ({ queryArgs, endpointName }) => {
+        const args = { ...queryArgs };
+        delete args.page;
+        return `${endpointName}-${JSON.stringify(args)}`;
+      },
+      merge: (currentCache, newItems, { arg }) => {
+        if (arg.page === 1 || !currentCache) {
+          return newItems;
+        }
+        currentCache.data.push(...newItems.data);
+        currentCache.hasMore = newItems.hasMore;
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
       providesTags: (_res, _err, arg) => [
-        { type: "Products", id: `${arg.shopId}-${arg.categoryId ?? "all"}-${arg.sort ?? "default"}` },
+        {
+          type: "Products",
+          id: `${arg.shopId}-${arg.categoryId ?? "all"}-${arg.sort ?? "default"}`,
+        },
       ],
     }),
 

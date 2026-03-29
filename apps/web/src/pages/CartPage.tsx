@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Alert,
   Box,
@@ -6,6 +7,7 @@ import {
   TextField,
   Typography,
   Divider,
+  Button,
 } from "@mui/material";
 import { Trash2 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -22,12 +24,22 @@ import {
   addOrderToHistory,
 } from "../store/slices/userSlice";
 
-export function CartPage() {
+import { ConfirmClearCartModal } from "../components/cart/ConfirmClearCartModal";
+import { PageLoader } from "../components/common/PageLoader";
+
+
+export default function CartPage() {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((s) => s.cart);
   const userInfo = useAppSelector((s) => s.user.info);
 
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
+
+  if (isLoading) {
+    return <PageLoader />;
+  }
 
   const lines = cart.items.map((i) => ({
     productId: i.id,
@@ -35,18 +47,50 @@ export function CartPage() {
   }));
 
   return (
-    <Box>
-      <Typography variant="h5" fontWeight={700} gutterBottom>
-        Shopping cart
-      </Typography>
+    <Box
+      sx={{
+        maxWidth: 1400,
+        mx: "auto",
+        width: "100%",
+        p: 2,
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
+        <Typography
+          variant="h5"
+          fontWeight={700}
+          sx={{
+            fontSize: { xs: "1.25rem", sm: "2rem" },
+          }}
+        >
+          Shopping cart
+        </Typography>
+
+        {cart.items.length > 0 && (
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => setIsConfirmModalOpen(true)}
+          >
+            Clear Cart
+          </Button>
+        )}
+      </Box>
 
       {cart.items.length === 0 ? (
         <Typography color="text.secondary">Your cart is empty.</Typography>
       ) : (
-        <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
-          {cart.items.map((item) => (
-            <Box key={item.id}>
-              {/* <Box key={`${item.id}-${index}`}> */}
+        <Paper variant="outlined" sx={{ py: 2, px: 4, mb: 3 }}>
+          {cart.items.map((item, index) => (
+            <Box key={`${item.id}-${index}`}>
               <Box
                 sx={{
                   display: "flex",
@@ -62,38 +106,27 @@ export function CartPage() {
                     {item.price.toFixed(2)} ₴ each
                   </Typography>
                 </Box>
-                {/* <TextField
-                  label="Qty"
-                  type="number"
-                  size="small"
-                  inputProps={{ min: 1, step: 1 }}
-                  value={item.quantity}
-                  onChange={(e) => {
-                    const q = Number.parseInt(e.target.value, 10);
-                    if (!Number.isNaN(q)) {
-                      dispatch(updateQuantity({ id: item.id, quantity: q }));
-                    }
-                  }}
-                  sx={{ width: 88 }}
-                /> */}
+
                 <TextField
-                  label="Кількість"
+                  label="Quantity"
                   type="number"
                   size="small"
                   value={item.quantity}
                   onChange={(e) => {
                     const val = e.target.value;
-                    if (val === "") return; 
+                    if (val === "") return;
                     let q = Number(val);
                     if (Number.isNaN(q)) return;
-                    if (q < 1) q = 1; 
+                    if (q < 1) q = 1;
                     dispatch(updateQuantity({ id: item.id, quantity: q }));
                   }}
                   sx={{ width: 88 }}
                   slotProps={{
                     htmlInput: {
                       min: 1,
-                      step: 1, 
+                      step: 1,
+                      type: "number",
+                      inputMode: "numeric",
                     },
                   }}
                 />
@@ -128,11 +161,11 @@ export function CartPage() {
         </Paper>
       )}
 
-      {error ? (
+      {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           Could not place order. Check the form and try again.
         </Alert>
-      ) : null}
+      )}
 
       <Typography
         variant="h6"
@@ -141,6 +174,7 @@ export function CartPage() {
       >
         Checkout
       </Typography>
+
       <CheckoutForm
         defaultValues={userInfo ?? undefined}
         cartLines={lines}
@@ -160,6 +194,12 @@ export function CartPage() {
           dispatch(addOrderToHistory(order.id));
           dispatch(clearCart());
         }}
+      />
+
+      <ConfirmClearCartModal
+        open={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        onConfirm={() => dispatch(clearCart())}
       />
     </Box>
   );

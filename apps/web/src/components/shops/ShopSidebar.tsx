@@ -1,17 +1,22 @@
+
 import { Box, Typography, Slider, CircularProgress } from "@mui/material";
 import { ShopList } from "./ShopList";
 import type { Shop } from "../../types/types";
+import { memo } from "react";
 
 interface ShopSidebarProps {
   ratingRange: [number, number];
-  setRatingRange: (v: [number, number]) => void;
+  setRatingRange: (
+    event: Event | React.SyntheticEvent,
+    value: number | number[],
+  ) => void;
   shopsLoading: boolean;
   shops: Shop[];
   selectedShopId: number | null;
   onSelectShop: (id: number) => void;
 }
 
-export function ShopSidebar({
+export const SidebarContent = memo(function SidebarContent({
   ratingRange,
   setRatingRange,
   shopsLoading,
@@ -20,13 +25,13 @@ export function ShopSidebar({
   onSelectShop,
 }: ShopSidebarProps) {
   return (
-    <Box sx={{ pr: { md: 1 } }}>
+    <Box sx={{ p: 2 }}>
       <Typography variant="subtitle2" gutterBottom>
         Shop rating ({ratingRange[0].toFixed(1)} - {ratingRange[1].toFixed(1)})
       </Typography>
       <Slider
         value={ratingRange}
-        onChange={(_, v) => setRatingRange(v as [number, number])}
+        onChange={(event, v) => setRatingRange(event, v)}
         min={1}
         max={5}
         step={0.1}
@@ -38,7 +43,9 @@ export function ShopSidebar({
         Shops
       </Typography>
       {shopsLoading ? (
-        <CircularProgress size={28} />
+        <Box sx={{ display: "flex", py: 2 }}>
+          <CircularProgress size={28} />
+        </Box>
       ) : (
         <ShopList
           shops={shops}
@@ -48,4 +55,4 @@ export function ShopSidebar({
       )}
     </Box>
   );
-}
+});

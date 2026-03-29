@@ -1,58 +1,135 @@
-import { Link as RouterLink, Outlet } from "react-router-dom";
+import { Link as RouterLink, Outlet, useLocation } from "react-router-dom";
 import {
   AppBar,
   Box,
   Button,
+  Badge,
   Container,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { ShoppingCart, Store, History } from "lucide-react";
+import { useAppSelector } from "../../store/hooks";
 
 export function AppLayout() {
+  const location = useLocation();
+  const cartItems = useAppSelector((s) => s.cart.items);
+  const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  const isActive = (path: string) => location.pathname === path;
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <AppBar position="sticky" color="default" elevation={1}>
-        <Toolbar sx={{ gap: 1, flexWrap: "wrap" }}>
+      <AppBar
+        position="sticky"
+        color="default"
+        elevation={1}
+        sx={{ bgcolor: "white" }}
+      >
+        <Toolbar
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: { sm: "space-between" },
+            alignItems: { xs: "flex-start", sm: "center" },
+            py: { xs: 1.5, sm: 0 },
+            px: { xs: 0, sm: 6 },
+            gap: { xs: 1, sm: 0 },
+          }}
+        >
           <Typography
             variant="h6"
             component={RouterLink}
             to="/"
             sx={{
-              flexGrow: { xs: 1, sm: 0 },
-              fontWeight: 700,
+              fontWeight: 800,
               color: "primary.main",
               textDecoration: "none",
+              width: { xs: "100%", sm: "auto" },
+              textAlign: { xs: "center", sm: "left" },
+              fontSize: { xs: "1.25rem", sm: "1.5rem" },
             }}
           >
             Delivery App
           </Typography>
-          <Button
-            component={RouterLink}
-            to="/"
-            color="inherit"
-            startIcon={<Store size={18} />}
+
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: { xs: "center", sm: "flex-end" },
+              width: { xs: "100%", sm: "auto" },
+              gap: { xs: 0.5, sm: 1 },
+            }}
           >
-            Shops
-          </Button>
-          <Button
-            component={RouterLink}
-            to="/cart"
-            color="inherit"
-            startIcon={<ShoppingCart size={18} />}
-          >
-            Cart
-          </Button>
-          <Button
-            component={RouterLink}
-            to="/orders"
-            color="inherit"
-            startIcon={<History size={18} />}
-          >
-            Orders
-          </Button>
+            <Button
+              component={RouterLink}
+              to="/"
+              startIcon={<Store size={18} />}
+              color={isActive("/") ? "primary" : "inherit"}
+              sx={{
+                fontWeight: isActive("/") ? 600 : 500,
+                borderRadius: 2,
+                bgcolor: isActive("/")
+                  ? "rgba(211, 47, 47, 0.04)"
+                  : "transparent",
+              }}
+            >
+              Shops
+            </Button>
+
+            <Button
+              component={RouterLink}
+              to="/cart"
+              color={isActive("/cart") ? "primary" : "inherit"}
+              sx={{
+                fontWeight: isActive("/cart") ? 600 : 500,
+                borderRadius: 2,
+                bgcolor: isActive("/cart")
+                  ? "rgba(211, 47, 47, 0.04)"
+                  : "transparent",
+              }}
+            >
+              <Badge
+                badgeContent={totalQuantity}
+                color="primary"
+                invisible={totalQuantity === 0}
+                sx={{
+                  "& .MuiBadge-badge": {
+                    right: -3,
+                    top: 3,
+                    border: "2px solid white",
+                    padding: "0 4px",
+                    fontSize: "0.7rem",
+                  },
+                }}
+              >
+                <ShoppingCart size={18} />
+              </Badge>
+              <Box component="span" sx={{ ml: 1 }}>
+                Cart
+              </Box>
+            </Button>
+
+            <Button
+              component={RouterLink}
+              to="/orders"
+              startIcon={<History size={18} />}
+              color={isActive("/orders") ? "primary" : "inherit"}
+              sx={{
+                fontWeight: isActive("/orders") ? 600 : 500,
+                borderRadius: 2,
+                bgcolor: isActive("/orders")
+                  ? "rgba(211, 47, 47, 0.04)"
+                  : "transparent",
+              }}
+            >
+              Orders
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
+
       <Container
         component="main"
         maxWidth="xl"

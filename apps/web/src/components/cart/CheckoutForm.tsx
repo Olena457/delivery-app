@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm  } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Alert,
@@ -41,7 +41,6 @@ export function CheckoutForm({
       address: defaultValues?.address ?? "",
     },
   });
-
   const onSubmit = handleSubmit(async (values) => {
     if (cartLines.length === 0) return;
     await onSubmitOrder({
@@ -52,7 +51,16 @@ export function CheckoutForm({
   });
 
   return (
-    <Box component="form" onSubmit={onSubmit} noValidate>
+    <Box
+      component="form"
+      onSubmit={onSubmit}
+      noValidate
+      sx={{
+        "& .MuiFormLabel-asterisk": {
+          color: "red",
+        },
+      }}
+    >
       {cartLines.length === 0 ? (
         <Alert severity="info" sx={{ mb: 2 }}>
           Add products to submit an order.
@@ -104,17 +112,27 @@ export function CheckoutForm({
           helperText={errors.address?.message}
         />
       </Box>
-      <Button
-        type="submit"
-        variant="contained"
-        size="large"
-        disabled={disabled || cartLines.length === 0}
-        startIcon={
-          disabled ? <CircularProgress size={18} color="inherit" /> : undefined
-        }
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "end",
+          mt: 3,
+        }}
       >
-        Submit order
-      </Button>
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          disabled={disabled || cartLines.length === 0}
+          startIcon={
+            disabled ? (
+              <CircularProgress size={18} color="inherit" />
+            ) : undefined
+          }
+        >
+          Submit order
+        </Button>
+      </Box>
     </Box>
   );
 }

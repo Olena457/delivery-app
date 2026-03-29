@@ -59,7 +59,7 @@ async function main() {
       });
     }
 
-    for (let j = 0; j < 20; j++) {
+    for (let j = 0; j < 45; j++) {
       const category = categories[j % categories.length];
 
       let title = 'Delicious Item';
@@ -72,9 +72,9 @@ async function main() {
       }
 
       const imageUrl =
-        j % 10 === 0
+        j % 25 === 0
           ? null
-          : `https://loremflickr.com/800/600/${category.search}?lock=${faker.number.int(1000)}`;
+          : `https://loremflickr.com/320/240/${category.search.split(',')[0]}?lock=${faker.number.int(1000)}`;
 
       await prisma.product.create({
         data: {
