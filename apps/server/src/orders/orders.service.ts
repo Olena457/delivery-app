@@ -65,6 +65,7 @@ export class OrdersService {
     return this.prisma.order.findMany({
       where: { userEmail: email },
       orderBy: { createdAt: 'desc' },
+      take: 6,
       include: orderInclude,
     });
   }

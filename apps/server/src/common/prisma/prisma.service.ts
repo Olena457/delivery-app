@@ -8,7 +8,6 @@ export class PrismaService
 {
   constructor() {
     super({
-      // Це допоможе тобі бачити в консолі, які запити йдуть до бази
       log: ['query', 'info', 'warn', 'error'],
     });
   }
