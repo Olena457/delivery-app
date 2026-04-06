@@ -44,7 +44,6 @@ export function AppLayout() {
             to="/"
             sx={{
               fontWeight: 800,
-              color: "primary.main",
               textDecoration: "none",
               width: { xs: "100%", sm: "auto" },
               textAlign: { xs: "center", sm: "left" },
@@ -53,6 +52,11 @@ export function AppLayout() {
               alignItems: "center",
               justifyContent: { xs: "center", sm: "flex-start" },
               gap: 1.5,
+
+              background: "linear-gradient(60deg, #fd5260 30%, #FFC371 70%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
             }}
           >
             <Box
