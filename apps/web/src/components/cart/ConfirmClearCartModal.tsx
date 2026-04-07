@@ -1,4 +1,3 @@
-import React, { forwardRef } from "react";
 import {
   Box,
   Typography,
@@ -8,9 +7,8 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  Fade,
 } from "@mui/material";
-import type { TransitionProps } from "@mui/material/transitions";
+import  FadeTransition  from "../transitions/FadeTransition";
 import { Trash2, X } from "lucide-react";
 
 interface ConfirmClearCartModalProps {
@@ -18,15 +16,6 @@ interface ConfirmClearCartModalProps {
   onClose: () => void;
   onConfirm: () => void;
 }
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement;
-  },
-  ref: React.Ref<unknown>,
-) {
-  return <Fade ref={ref} {...props} timeout={{ enter: 500, exit: 400 }} />;
-});
 
 export const ConfirmClearCartModal: React.FC<ConfirmClearCartModalProps> = ({
   open,
@@ -38,7 +27,7 @@ export const ConfirmClearCartModal: React.FC<ConfirmClearCartModalProps> = ({
       open={open}
       onClose={onClose}
       slots={{
-        transition: Transition,
+        transition: FadeTransition, 
       }}
       maxWidth="xs"
       sx={{ "& .MuiDialog-paper": { borderRadius: 2 } }}

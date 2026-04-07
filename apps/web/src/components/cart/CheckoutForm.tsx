@@ -95,7 +95,12 @@ export function CheckoutForm({
           label="Phone"
           required
           fullWidth
-          inputProps={{ inputMode: "numeric" }}
+          slotProps={{
+            htmlInput: {
+              inputMode: "numeric",
+              pattern: "[0-9]*",
+            },
+          }}
           {...register("userPhone")}
           error={Boolean(errors.userPhone)}
           helperText={errors.userPhone?.message}
