@@ -20,8 +20,8 @@ const userSlice = createSlice({
     },
     addOrderToHistory: (state, action: PayloadAction<number>) => {
       state.orderHistory.unshift(action.payload);
-      if (state.orderHistory.length > 5) {
-        state.orderHistory = state.orderHistory.slice(0, 5);
+      if (state.orderHistory.length > 6) {
+        state.orderHistory = state.orderHistory.slice(0, 6);
       }
     },
     clearUser: (state) => {
