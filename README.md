@@ -1,10 +1,20 @@
-# 🚚 Food Delivery App 
+# 🍨 Food Delivery App 
 
 A modern, full-stack food ordering and delivery platform built with a focus on performance, scalability, and seamless user experience.
 
 This project is implemented as a **Monorepo**, containing both the frontend and backend services in a single repository for easier development and deployment.
 
 ---
+
+<div style="display: flex; flex-wrap: wrap; gap: 15px;">
+
+  <img src="/apps/web/public/cart.jpg" width="30%" height="150px" alt="Screen 1"/>
+  <img src="/apps/web/deli/cart.jpg" width="30%" height="150px" alt="Screen2"/>
+  <img src="/apps/web/history/cart.jpg" width="30%" height="150px" alt="Scree 3"/>
+  <img src="/apps/web/swager/cart.jpg" width="30%" height="150px" alt="Screen4"/>
+
+</div>
+
 
 ## Key Features
 
