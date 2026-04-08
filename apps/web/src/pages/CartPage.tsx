@@ -181,18 +181,23 @@ export default function CartPage() {
         totalPrice={cart.totalPrice}
         disabled={isLoading}
         onSubmitOrder={async (dto) => {
-          const order = await createOrder(dto).unwrap();
-          dispatch(
-            setUserData({
-              userName: dto.userName,
-              userEmail: dto.userEmail,
-              userPhone: dto.userPhone,
-              address: dto.address,
-            }),
-          );
-          dispatch(setLastOrder(order.id));
-          dispatch(addOrderToHistory(order.id));
-          dispatch(clearCart());
+          try {
+            const order = await createOrder(dto).unwrap();
+
+            dispatch(
+              setUserData({
+                userName: dto.userName,
+                userEmail: dto.userEmail,
+                userPhone: dto.userPhone,
+                address: dto.address,
+              }),
+            );
+            dispatch(setLastOrder(order.id));
+            dispatch(addOrderToHistory(order.id));
+            dispatch(clearCart());
+          } catch (err) {
+            console.error("Failed to submit order:", err);
+          }
         }}
       />
 
