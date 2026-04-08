@@ -6,7 +6,7 @@ This project is implemented as a **Monorepo**, containing both the frontend and 
 
 ---
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+<div style="display: grid; grid-template-columns: repeat(2, 1fr 1fr); gap: 15px;">
   <img src="/apps/web/public/cart.jpg" width="50%" height="200px" alt="Screen 1"/>
   <img src="/apps/web/public/deli.jpg" width="50%" height="200px" alt="Screen2"/>
   <img src="/apps/web/public/history.jpg" width="50%" height="200px" alt="Scree 3"/>
