@@ -89,3 +89,14 @@ model OrderItem {
 
   @@map("order_items")
 }
+
+model VerificationCode {
+  id        String   @id @default(uuid())
+  email     String
+  code      String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([email])
+}
+
