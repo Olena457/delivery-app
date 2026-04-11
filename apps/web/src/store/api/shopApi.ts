@@ -1,6 +1,5 @@
-
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { RootState } from "../index"; 
 import type {
   CreateOrderDto,
   OrderHistoryItem,
@@ -28,7 +27,17 @@ export type ProductsQuery = {
 
 export const shopApi = createApi({
   reducerPath: "shopApi",
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: API_URL,
+    // logic to include token in headers if it exists in the store 
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).user.token;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   tagTypes: ["Orders", "Products", "Shops", "Categories"],
   endpoints: (builder) => ({
     getShops: builder.query<Shop[], ShopsQuery | void>({
@@ -116,6 +125,25 @@ export const shopApi = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
+
+    requestCode: builder.mutation<{ message: string }, { email: string }>({
+      query: (body) => ({
+        url: "/auth/request-code",
+        method: "POST",
+        body,
+      }),
+    }),
+
+    verifyCode: builder.mutation<
+      { access_token: string },
+      { email: string; code: string }
+    >({
+      query: (body) => ({
+        url: "/auth/verify-code",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -130,4 +158,6 @@ export const {
   useCreateOrderMutation,
   useUpdateOrderMutation,
   useDeleteOrderMutation,
+  useRequestCodeMutation,
+  useVerifyCodeMutation,
 } = shopApi;

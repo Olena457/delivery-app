@@ -43,6 +43,7 @@ export type UserState = {
   info: UserInfo | null;
   orderHistory: number[];
   lastOrderId: number | null;
+  token: string | null;
 };
 
 export type OrderLineInput = {
