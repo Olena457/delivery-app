@@ -59,27 +59,35 @@ export default function OrderHistoryPage() {
         data?: { message?: string | string[] };
       };
 
-      const serverMessage = Array.isArray(error.data?.message)
-        ? error.data.message[0]
-        : error.data?.message;
+      const status = error?.status;
+      const message = error?.data?.message;
 
-      if (error.status === 404) {
+      const serverMessage = Array.isArray(message) ? message[0] : message;
+
+      if (status === 404) {
         setAuthError(
-         "No account found with this email. Please enter the correct address to receive your code.",
+          "No account found with this email. Please use the email from your order.",
         );
-      } else if (error.status === 429) {
+      } else if (status === 429) {
         setAuthError("Too many requests. Please try again in a few minutes.");
-      } else if (serverMessage?.includes("Cannot POST")) {
+      } else if (
+        typeof serverMessage === "string" &&
+        serverMessage.includes("Cannot POST")
+      ) {
         setAuthError("Server configuration error. Please contact support.");
+      } else if (status === "FETCH_ERROR") {
+        setAuthError(
+          "Cannot connect to server. Please check your internet connection.",
+        );
       } else {
         setAuthError(
-          serverMessage ||
-            "Something went wrong. Check your internet connection.",
+          typeof serverMessage === "string"
+            ? serverMessage
+            : "Something went wrong. Please try again.",
         );
       }
     }
   };
-
 
   const onVerifyCode = async (code: string) => {
     try {
