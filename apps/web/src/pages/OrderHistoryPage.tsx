@@ -37,20 +37,49 @@ export default function OrderHistoryPage() {
   const [fetchOrders, { isFetching, error }] = useLazyGetOrdersByEmailQuery();
   const [requestCode, { isLoading: isSending }] = useRequestCodeMutation();
   const [verifyCode, { isLoading: isVerifying }] = useVerifyCodeMutation();
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const handleLoadClick = () => {
     if (!email.trim()) return;
     setIsAuthOpen(true);
   };
 
+ 
+
   const onSendCode = async () => {
+    setAuthError(null);
     try {
       await requestCode({ email: email.trim() }).unwrap();
       setIsCodeSent(true);
-    } catch (e) {
+    } catch (e: unknown) {
       console.error("Failed to send code", e);
+
+      const error = e as {
+        status?: number | string;
+        data?: { message?: string | string[] };
+      };
+
+      const serverMessage = Array.isArray(error.data?.message)
+        ? error.data.message[0]
+        : error.data?.message;
+
+      if (error.status === 404) {
+        setAuthError(
+         "No account found with this email. Please enter the correct address to receive your code.",
+        );
+      } else if (error.status === 429) {
+        setAuthError("Too many requests. Please try again in a few minutes.");
+      } else if (serverMessage?.includes("Cannot POST")) {
+        setAuthError("Server configuration error. Please contact support.");
+      } else {
+        setAuthError(
+          serverMessage ||
+            "Something went wrong. Check your internet connection.",
+        );
+      }
     }
   };
+
 
   const onVerifyCode = async (code: string) => {
     try {
@@ -181,7 +210,7 @@ export default function OrderHistoryPage() {
 
             {order.items.map((line) => (
               <Typography key={line.id} variant="body2">
-                {line.product.title} × {line.quantity} —{" "}
+                {line.product.title} U+00d7 {line.quantity} : {" "}
                 {(line.product.price * line.quantity).toFixed(2)} ₴
               </Typography>
             ))}
@@ -212,6 +241,7 @@ export default function OrderHistoryPage() {
         onClose={() => {
           setIsAuthOpen(false);
           setIsCodeSent(false);
+          setAuthError(null);
         }}
         email={email}
         setEmail={setEmail}
@@ -219,6 +249,7 @@ export default function OrderHistoryPage() {
         onVerifyCode={onVerifyCode}
         isCodeSent={isCodeSent}
         isLoading={isSending || isVerifying}
+        error={authError}
       />
     </Box>
   );

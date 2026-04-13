@@ -8,6 +8,7 @@ import {
   DialogActions,
   Button,
   TextField,
+  Alert,
 } from "@mui/material";
 import FadeTransition from "../transitions/FadeTransition";
 import { Mail, Key, X } from "lucide-react"; 
@@ -22,10 +23,12 @@ interface AuthModalProps {
   onVerifyCode: (code: string) => void;
   isCodeSent: boolean;
   isLoading: boolean;
+  error?: string | null;
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({
   open,
+  error,
   onClose,
   email,
   setEmail,
@@ -70,11 +73,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
       <DialogContent dividers>
         <Box sx={{ py: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+          {error && (
+            <Alert severity="error" sx={{ mb: 1 }}>
+              {error}
+            </Alert>
+          )}
           {!isCodeSent ? (
             <>
               <Typography variant="body2" color="text.secondary">
-                Please enter the email you used for your orders. We will send
-                you a 6-digit verification code.
+                Please enter the email you used for your orders.
               </Typography>
               <TextField
                 fullWidth
@@ -98,12 +105,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="123456"
-                inputProps={{
-                  maxLength: 6,
-                  style: {
-                    textAlign: "center",
-                    letterSpacing: "0.5rem",
-                    fontSize: "1.2rem",
+                slotProps={{
+                  htmlInput: {
+                    maxLength: 6,
+                    style: {
+                      textAlign: "center",
+                      letterSpacing: "0.5rem",
+                      fontSize: "1.2rem",
+                    },
                   },
                 }}
               />
