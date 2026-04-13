@@ -10,6 +10,6 @@ export const PageLoader = () => (
       width: "100%",
     }}
   >
-    <CircularProgress color="inherit" size={60} thickness={4} />
+    <CircularProgress color="primary" size={60} thickness={4} />
   </Box>
 );
