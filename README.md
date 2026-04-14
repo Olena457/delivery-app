@@ -1,8 +1,8 @@
-# 🍨 Food Delivery App 
+# 🍨 _Food Delivery App_ 
 
-A modern, full-stack food ordering and delivery platform built with a focus on performance, scalability, and seamless user experience.
+_A modern, full-stack food ordering and delivery platform built with a focus on performance, scalability, and seamless user experience._
 
-This project is implemented as a **Monorepo**, containing both the frontend and backend services in a single repository for easier development and deployment.
+*This project is implemented as a **Monorepo**, containing both the frontend and backend services in a single repository for easier development and deployment.*
 
 ---
 
@@ -49,14 +49,12 @@ This project is implemented as a **Monorepo**, containing both the frontend and 
 * **Prisma ORM** : Type-safe database client and migration tool.
 * **Swagger API** : Automated API documentation.
 * **Faker.js** : For generating high-quality seed data.
+* **Resend Email Service**: For sending verification code.
 
 ---
 
 
-
-### 🛠 Technology Stack for Security
-
-## 🔒 Security, Authorization & Data Protection
+## 🛡 Security, Authorization & Data Protection
 
 - Implementation of a robust security layer to protect user data.
 - A verification system has been integrated to ensure privacy and prevent unauthorized access.
