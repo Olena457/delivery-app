@@ -6,16 +6,16 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 
 ---
 
-<div style="display: flex; flex-wrap: wrap; gap: 25px;">
-  <img src="apps/web/public/cart.jpg" width="25%" height="138px" alt="card"/>
-  <img src="apps/web/public/deli.jpg" width="25%" height="138px" alt="product"/>
-  <img src="apps/web/public/clear.jpg" width="25%" height="138px" alt="clear"/>
-  <img src="apps/web/public/swager.jpg" width="25%" height="138px" alt="swager"/>
-  <img src="apps/web/public/enter.jpg" width="25%" height="138px" alt="enter"/>
-  <img src="apps/web/public/verification.jpg" width="25%" height="138px" alt="verification"/>
-  <img src="apps/web/public/history.jpg"width="25%" height="138px" alt="history"/>
-  <img src="apps/web/public/code.jpg" width="25%" height="138px" alt="code"/>
-  <img src="apps/web/public/reorder.jpg" width="25%" height="138px" alt="reorder"/>
+<div style="display: flex; flex-wrap: wrap; gap: 15px;">
+  <img src="apps/web/public/cart.jpg" width="33%" height="132px" alt="card"/>
+  <img src="apps/web/public/deli.jpg" width="33%" height="132px" alt="product"/>
+  <img src="apps/web/public/clear.jpg" width="33%" height="132px" alt="clear"/>
+  <img src="apps/web/public/swager.jpg" width="33%" height="132px" alt="swager"/>
+  <img src="apps/web/public/enter.jpg" width="33%" height="132px" alt="enter"/>
+  <img src="apps/web/public/verification.jpg" width="33%" height="132px" alt="verification"/>
+  <img src="apps/web/public/history.jpg"width="33%" height="132px" alt="history"/>
+  <img src="apps/web/public/code.jpg" width="33%" height="132px" alt="code"/>
+  <img src="apps/web/public/reorder.jpg" width="33%" height="132px" alt="reorder"/>
 </div>
 
 ---
@@ -27,7 +27,7 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 - **Dynamic Product Filtering:** Filter items by category (Main Dishes, Desserts, Drinks) and shop rating.
 - **Real-time Order History:** Search orders by email and phone with the ability to **Reorder** previous items.
 - **Responsive Design:** Fully adapted for Desktop, Tablet, and Mobile devices.
-- **Database Seeding:** Automated generation of 250+ realistic products and reviews using Faker/loremflickr.
+- **Database Seeding:** Automated generation of 330+ realistic products and reviews using Faker/loremflickr.
 - **Swager Documentation:** Implement automatic generation of API documentation to simplify and streamline testing.
 
 ---
