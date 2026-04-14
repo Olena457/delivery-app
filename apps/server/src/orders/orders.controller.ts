@@ -7,11 +7,20 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Request } from 'express';
+
+interface RequestWithUser extends Request {
+  user: {
+    email: string;
+  };
+}
 
 @Controller('orders')
 export class OrdersController {
@@ -22,14 +31,11 @@ export class OrdersController {
     return this.ordersService.create(dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('history')
-  findHistory(@Query('email') email: string) {
-    if (!email?.trim()) {
-      return [];
-    }
-    return this.ordersService.findHistoryByEmail(email.trim());
+  findHistory(@Req() req: RequestWithUser) {
+    return this.ordersService.findHistoryByEmail(req.user.email);
   }
-
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.ordersService.findOne(id);

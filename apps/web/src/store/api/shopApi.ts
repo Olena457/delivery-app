@@ -29,7 +29,7 @@ export const shopApi = createApi({
   reducerPath: "shopApi",
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
-    // logic to include token in headers if it exists in the store 
+    // logic to include token in headers if it exists in the store
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).user.token;
       if (token) {
@@ -86,14 +86,13 @@ export const shopApi = createApi({
       providesTags: (_result, _error, id) => [{ type: "Orders", id }],
     }),
 
-    getOrdersByEmail: builder.query<HistoryResponse, string>({
-      query: (email) => ({
+    getOrdersByEmail: builder.query<HistoryResponse, void>({
+      query: () => ({
         url: "/orders/history",
-        params: { email: email.trim() },
       }),
       providesTags: ["Orders"],
     }),
-
+    
     createOrder: builder.mutation<OrderHistoryItem, CreateOrderDto>({
       query: (body) => ({
         url: "/orders",
