@@ -12,7 +12,7 @@ export class MailService {
   }
 
   async sendCode(email: string, code: string) {
-    // logger for debugging purposes
+    // logger for debugging purposes, remove in production
     this.logger.debug(`[DEBUG] Verification code for ${email}: ${code}`);
 
     await this.resend.emails.send({

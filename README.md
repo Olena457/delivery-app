@@ -12,6 +12,12 @@ This project is implemented as a **Monorepo**, containing both the frontend and 
 | <img src="/apps/web/public/cart.jpg" width="300" height="180"/> | <img src="/apps/web/public/deli.jpg" width="300" height="180"/> |
 |-----------------------------------------------------------------|-----------------------------------------------------------------|
 | <img src="/apps/web/public/history.jpg" width="300" height="180"/> | <img src="/apps/web/public/swager.jpg" width="300" height="180"/> |
+| <img src="/apps/web/public/clear.jpg" width="300" height="180"/> | <img src="/apps/web/public/clear.jpg" width="300" height="180"/> |
+|-----------------------------------------------------------------|-----------------------------------------------------------------|
+| <img src="/apps/web/public/order.jpg" width="300" height="180"/> | <img src="/apps/web/public/reorder.jpg" width="300" height="180"/> |
+
+
+
 
 
 ## Key Features
@@ -46,6 +52,47 @@ This project is implemented as a **Monorepo**, containing both the frontend and 
 
 ---
 
+
+
+### 🛠 Technology Stack for Security
+
+## 🔒 Security, Authorization & Data Protection
+
+- Implementation of a robust security layer to protect user data.
+- A verification system has been integrated to ensure privacy and prevent unauthorized access.
+- User order history is strictly protected and accessible only to the verified owner of the email address.
+
+### 🛠 Technology Stack for Security
+
+&#8900; **JWT (JSON Web Tokens)**
+
+ -  Used for secure, stateless authentication. After verification of the one-time code, a signed token is issued for subsequent authorized requests.
+
+&#8900; **Passport.js & JWT Strategy**
+
+- Configuration of a dedicated authentication strategy to decode and validate tokens, ensuring user identity verification for every backend request.
+
+&#8900;**NestJS Guards**
+
+ - Implementation of security Guards to protect specific endpoints. The Order History route is private and accessible only with a valid JWT.
+
+&#8900; **Resend Email Service**
+
+- Integration of a transactional email provider for the delivery of 6-digit verification codes (OTP) to the user's inbox.
+
+### 🛡 Personal Data Protection Logic
+
+- The system is designed to prevent unauthorized access to private data (order history, personal details) even if a third party knows the user's email.
+- Access is granted only after successful verification of a dynamic code, which triggers the generation of a secure session token.
+
+###  **Important Technical Note on Resend Integration**
+
+> &#8900; **Note on Testing Environment**
+> A verified custom domain is required for production use of the **Resend** service.
+ >- For demonstration purposes, the project operates in **Testing Mode**.
+> 
+> - In this mode, emails can only be sent to a list of **"Allowed Recipients"** (up to 10 addresses).
+>- To test the email functionality, the recipient's email must be manually added and confirmed in the Resend dashboard.
 ##  Installation & Setup
 
 ### 1. Clone the repository
