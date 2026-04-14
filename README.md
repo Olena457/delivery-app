@@ -11,7 +11,7 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
   <img src="apps/web/public/deli.jpg" width="33%" height="132px" alt="product"/>
   <img src="apps/web/public/clear.jpg" width="33%" height="132px" alt="clear"/>
   <img src="apps/web/public/swager.jpg" width="33%" height="132px" alt="swager"/>
-  <img src="apps/web/public/order.jpg" width="33%" height="132px" alt="reorder"/>
+  <img src="apps/web/public/order.jpg" width="33%" height="132px" alt="order"/>
   <img src="apps/web/public/enter.jpg" width="33%" height="132px" alt="enter"/>
   <img src="apps/web/public/verification.jpg" width="33%" height="132px" alt="verification"/>
   <img src="apps/web/public/history.jpg"width="33%" height="132px" alt="history"/>
