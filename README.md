@@ -6,16 +6,16 @@ This project is implemented as a **Monorepo**, containing both the frontend and 
 
 ---
 
-<div style="display: flex; flex-wrap: wrap; gap: 20px;">
-  <img src="apps/web/public/cart.jpg" width="30%" height="130px" alt="card"/>
-  <img src="apps/web/public/deli.jpg" width="30%" height="130px" alt="product"/>
-  <img src="apps/web/public/clear.jpg" width="30%" height="130px" alt="clear"/>
-  <img src="apps/web/public/swager.jpg" width="30%" height="130px" alt="swager"/>
-  <img src="apps/web/public/enter.jpg" width="30%" height="130px" alt="enter"/>
-  <img src="apps/web/public/verification.jpg" width="30%" height="130px" alt="verification"/>
-  <img src="apps/web/public/history.jpg"width="30%" height="130px" alt="history"/>
-  <img src="apps/web/public/code.jpg" width="30%" height="130px" alt="code"/>
-  <img src="apps/web/public/reorder.jpg" width="30%" height="130px" alt="reorder"/>
+<div style="display: flex; flex-wrap: wrap; gap: 25px;">
+  <img src="apps/web/public/cart.jpg" width="25%" height="130px" alt="card"/>
+  <img src="apps/web/public/deli.jpg" width="25%" height="130px" alt="product"/>
+  <img src="apps/web/public/clear.jpg" width="25%" height="130px" alt="clear"/>
+  <img src="apps/web/public/swager.jpg" width="25%" height="130px" alt="swager"/>
+  <img src="apps/web/public/enter.jpg" width="25%" height="130px" alt="enter"/>
+  <img src="apps/web/public/verification.jpg" width="25%" height="130px" alt="verification"/>
+  <img src="apps/web/public/history.jpg"width="25%" height="130px" alt="history"/>
+  <img src="apps/web/public/code.jpg" width="25%" height="130px" alt="code"/>
+  <img src="apps/web/public/reorder.jpg" width="25%" height="130px" alt="reorder"/>
 </div>
 
 ---
