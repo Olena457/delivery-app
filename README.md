@@ -54,6 +54,12 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 
 ---
 
+### Short Video:
+
+* **User Email Verification:** Ensures secure access by verifying users via their email addresses.
+
+[🔗 Delivery App](https://drive.google.com/file/d/1Fv7woamqFwHWCqBkcKaFUadIosNtVarY/view?usp=sharing)
+
 
 ## 🛡 Security, Authorization & Data Protection
 
