@@ -109,10 +109,8 @@ export class TelegramUpdate {
     console.log('Повідомлення прийшло:', text);
 
     try {
-      // 1. Показуємо статус "друкує"
       await ctx.sendChatAction('typing');
 
-      // 2. Отримуємо дані з бази
       const products = await this.prisma.product.findMany({
         where: { isAvailable: true },
         include: {
@@ -122,7 +120,6 @@ export class TelegramUpdate {
         take: 10,
       });
 
-      // 3. Формуємо список для AI
       const productsList = products
         .map(
           (p) =>
@@ -132,7 +129,6 @@ export class TelegramUpdate {
 
       const shops = [...new Set(products.map((p) => p.shop.name))].join(', ');
 
-      // 4. Формуємо промт
       const prompt = `
         You are a specialized AI assistant for the "Delivery App" food delivery platform.
         CONTEXT:
@@ -146,14 +142,11 @@ export class TelegramUpdate {
         User's question: "${text}"
       `;
 
-      // 5. Отримуємо відповідь від AI
       const aiResponse = await this.aiService.generateResponse(prompt);
 
-      // 6. Надсилаємо відповідь користувачу
       await ctx.reply(aiResponse);
     } catch (error) {
       console.error('Telegram Bot Error:', error);
-      // Якщо впав AI, відправимо хоча б просту відповідь, щоб перевірити зв'язок
       await ctx.reply(
         'Я бачу твоє повідомлення, але виникла помилка при генерації відповіді ШІ.',
       );
