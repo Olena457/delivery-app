@@ -29,43 +29,43 @@ export class TelegramUpdate {
     try {
       await ctx.sendChatAction('typing');
 
-      //get available products from DB
       const products = await this.prisma.product.findMany({
         where: { isAvailable: true },
         include: {
           shop: true,
           category: true,
         },
-        take: 8, //limit to 8 products
+        take: 15,
       });
 
       const productsList = products
         .map(
           (p) =>
-            `- ${p.title} (${p.category.name}) in ${p.shop.name}: ${p.price} UAH. Description: ${p.description || 'N/A'}. Tags: ${p.tags || ''}`,
+            `- ${p.title} (${p.category.name}) from ${p.shop.name}: ${p.price} UAH. ${p.tags ? `Tags: ${p.tags}` : ''}`,
         )
         .join('\n');
 
-      //prompt for AI
+      const shops = [...new Set(products.map((p) => p.shop.name))].join(', ');
+
       const prompt = `
-        You are a helpful assistant for a food delivery platform. 
-        Current available products:
+        You are a specialized AI assistant for the "Delivery App" food delivery platform.
+        
+        CONTEXT:
+        - Available shops: ${shops}
+        - Current menu items:
         ${productsList}
 
-        User's question: "${text}"
+        RULES:
+        1. LANGUAGE: Detect the language of the user's question and respond in that SAME language (e.g., if asked in Ukrainian, answer in Ukrainian).
+        2. TOPIC: Only answer questions about food, drinks, delivery, menu, prices, or our partner shops. 
+        3. OFF-TOPIC: If the user asks about anything unrelated (coding, politics, general chat), politely say that you are specialized only in food delivery and cannot assist with other topics.
+        4. ACCURACY: If a product is not in the list, say we don't have it but suggest something similar from the menu above.
+        5. TONE: Be friendly, helpful, and concise.
 
-        Your instructions:
-        - Answer in English.
-        - Be friendly and professional.
-        - If the user asks for a specific product, check if we have it in the list above.
-        - If we don't have it, suggest the closest alternative.
-        - If they ask about shops, mention ${[...new Set(products.map((p) => p.shop.name))].join(', ')}.
+        User's question: "${text}"
       `;
 
-      // use AiService (Gemini)
       const aiResponse = await this.aiService.generateResponse(prompt);
-
-      // send response back to user
       await ctx.reply(aiResponse);
     } catch (error) {
       console.error('Telegram Bot Error:', error);
