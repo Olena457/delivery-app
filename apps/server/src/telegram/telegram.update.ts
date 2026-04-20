@@ -28,6 +28,7 @@ export class TelegramUpdate {
 
   @On('text')
   async onMessage(@Message('text') text: string, ctx: Context) {
+    console.log('Отримано повідомлення:', text);
     try {
       await ctx.sendChatAction('typing');
 
