@@ -1,60 +1,33 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-
-interface GeminiResponse {
-  candidates: Array<{
-    content: {
-      parts: Array<{
-        text: string;
-      }>;
-    };
-  }>;
-  error?: {
-    message: string;
-  };
-}
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 @Injectable()
 export class AiService {
-  private readonly apiKey = process.env.GEMINI_API_KEY;
-  private readonly apiUrl =
-    'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+  private genAI: GoogleGenerativeAI;
+
+  constructor(private configService: ConfigService) {
+    const apiKey = this.configService.get<string>('GOOGLE_API_KEY');
+
+    if (!apiKey) {
+      throw new Error('GOOGLE_API_KEY is not defined in .env');
+    }
+
+    this.genAI = new GoogleGenerativeAI(apiKey);
+  }
 
   async generateResponse(prompt: string): Promise<string> {
     try {
-      const response = await fetch(`${this.apiUrl}?key=${this.apiKey}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [{ text: prompt }],
-            },
-          ],
-        }),
-      });
+      const model = this.genAI.getGenerativeModel({ model: 'gemini-pro' });
+      const result = await model.generateContent(prompt);
 
-      const data = (await response.json()) as GeminiResponse;
+      const response = result.response;
+      const text = response.text();
 
-      if (!response.ok) {
-        throw new Error(data.error?.message || 'Failed to fetch Gemini API');
-      }
-
-      const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-      if (!aiText) {
-        throw new Error('Empty response from AI');
-      }
-
-      return aiText;
+      return text;
     } catch (error) {
-      console.error('Gemini API Error:', error);
-      throw new InternalServerErrorException(
-        error instanceof Error
-          ? error.message
-          : 'AI Service is currently unavailable',
-      );
+      console.error('AI Generation Error:', error);
+      return 'I am sorry, but I am having trouble responding right now. Please try again later.';
     }
   }
 }
