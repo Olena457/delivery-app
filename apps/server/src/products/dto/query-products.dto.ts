@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export enum ProductSort {
   PRICE_ASC = 'price_asc',
@@ -41,6 +41,13 @@ export class QueryProductsDto {
   @IsInt()
   @Min(1)
   page?: number;
+  @ApiPropertyOptional({
+    example: 'spicy',
+    description: 'Filter by product tag',
+  })
+  @IsOptional()
+  @IsString()
+  tag?: string;
 
   @ApiPropertyOptional({
     example: 10,

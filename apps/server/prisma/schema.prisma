@@ -40,15 +40,19 @@ model Category {
 }
 
 model Product {
-  id         Int         @id @default(autoincrement())
-  title      String
-  price      Float
-  image      String?
-  categoryId Int         @map("category_id")
-  category   Category    @relation(fields: [categoryId], references: [id])
-  shopId     Int         @map("shop_id")
-  shop       Shop        @relation(fields: [shopId], references: [id])
-  orderItems OrderItem[]
+  id          Int         @id @default(autoincrement())
+  title       String
+  price       Float
+  image       String?
+  description String?     @db.Text
+  isAvailable Boolean     @default(true) @map("is_available")
+  tags        String?    
+  
+  categoryId  Int         @map("category_id")
+  category    Category    @relation(fields: [categoryId], references: [id])
+  shopId      Int         @map("shop_id")
+  shop        Shop        @relation(fields: [shopId], references: [id])
+  orderItems  OrderItem[]
 
   @@map("products")
 }

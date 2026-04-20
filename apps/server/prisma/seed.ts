@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Starting seed...');
 
+  // Clean up existing data
   await prisma.review.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();
@@ -17,7 +18,17 @@ async function main() {
   const categoriesData = [
     { name: 'Main Dishes', search: 'food,dinner,meat' },
     { name: 'Desserts', search: 'cake,sweet,dessert' },
-    { name: 'Drinks', search: 'beverage,drink,coffee' },
+    { name: 'Drinks', search: 'drink,beverage,coffee' },
+  ];
+
+  // Tags that the AI will use to filter products based on user requests
+  const availableTags = [
+    'spicy',
+    'vegan',
+    'promo',
+    'new',
+    'sugar-free',
+    'popular',
   ];
 
   const categories: (Category & { search: string })[] = [];
@@ -76,11 +87,20 @@ async function main() {
           ? null
           : `https://loremflickr.com/320/240/${category.search.split(',')[0]}?lock=${faker.number.int(1000)}`;
 
+      // Logic for new fields
+      const randomTags = faker.helpers
+        .arrayElements(availableTags, { min: 0, max: 2 })
+        .join(',');
+      const isAvailable = Math.random() > 0.1; // 90% chance to be available
+
       await prisma.product.create({
         data: {
           title,
           price: parseFloat(faker.commerce.price({ min: 150, max: 850 })),
           image: imageUrl,
+          description: faker.commerce.productDescription(),
+          isAvailable: isAvailable,
+          tags: randomTags,
           shopId: shop.id,
           categoryId: category.id,
         },

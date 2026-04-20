@@ -11,6 +11,7 @@ export class ProductsService {
     const shop = await this.prisma.shop.findUnique({
       where: { id: query.shopId },
     });
+
     if (!shop) {
       throw new NotFoundException(`Shop ${query.shopId} not found`);
     }
@@ -18,8 +19,16 @@ export class ProductsService {
     const where: Prisma.ProductWhereInput = {
       shopId: query.shopId,
     };
+
     if (query.categoryId) {
       where.categoryId = query.categoryId;
+    }
+
+    if (query.tag) {
+      where.tags = {
+        contains: query.tag,
+        mode: 'insensitive',
+      };
     }
 
     const page = query.page ?? 1;

@@ -13,16 +13,19 @@ export type Shop = {
   };
 };
 
+
 export type Product = {
   id: number;
   title: string;
   price: number;
   image?: string | null;
+  description?: string | null; 
+  isAvailable: boolean; 
+  tags?: string | null; 
   categoryId: number;
   shopId: number;
   category?: Category;
 };
-
 export type CategoryFilter = Category & {
   isActive?: boolean;
   isDisabled?: boolean;
