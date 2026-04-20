@@ -2,8 +2,7 @@ import { Update, Start, On, Message, Command } from 'nestjs-telegraf';
 import { Context } from 'telegraf';
 import { AiService } from '../ai/ai.service';
 import { PrismaService } from '../common/prisma/prisma.service';
-import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
-
+import { Injectable } from '@nestjs/common';
 @Update()
 @Injectable()
 export class TelegramUpdate {
