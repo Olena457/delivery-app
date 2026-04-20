@@ -20,7 +20,7 @@ export type Product = {
   price: number;
   image?: string | null;
   description?: string | null; 
-  isAvailable: boolean; 
+  isAvailable?: boolean; 
   tags?: string | null; 
   categoryId: number;
   shopId: number;

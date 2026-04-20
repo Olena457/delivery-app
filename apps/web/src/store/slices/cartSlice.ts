@@ -69,6 +69,8 @@ const cartSlice = createSlice({
           categoryId: p.categoryId,
           shopId: p.shopId,
           category: p.category,
+          tags: p.tags,
+          isAvailable: p.isAvailable ?? true,
         };
         const existing = state.items.find((i) => i.id === cartProduct.id);
         if (existing) {
