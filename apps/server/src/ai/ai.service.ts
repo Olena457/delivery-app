@@ -7,10 +7,10 @@ export class AiService {
   private genAI: GoogleGenerativeAI;
 
   constructor(private configService: ConfigService) {
-    const apiKey = this.configService.get<string>('GOOGLE_API_KEY');
+    const apiKey = this.configService.get<string>('GEMINI_API_KEY');
 
     if (!apiKey) {
-      throw new Error('GOOGLE_API_KEY is not defined in .env');
+      throw new Error('GEMINI_API_KEY is not defined in .env');
     }
 
     this.genAI = new GoogleGenerativeAI(apiKey);
