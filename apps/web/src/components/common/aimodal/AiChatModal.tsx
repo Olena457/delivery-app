@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -11,8 +11,9 @@ import {
   TextField,
   Paper,
   CircularProgress,
+  InputAdornment,
 } from "@mui/material";
-import { Bot, X, Send } from "lucide-react";
+import { Bot, X, Send, CircleX } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import FadeTransition from "../../transitions/FadeTransition";
 import { useAskAiMutation } from "../../../store/api/shopApi";
@@ -28,6 +29,16 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
     { role: "user" | "ai"; text: string }[]
   >([]);
   const [askAi, { isLoading }] = useAskAiMutation();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -92,6 +103,7 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
         }}
       >
         <Box
+          ref={scrollRef}
           sx={{
             flexGrow: 1,
             overflowY: "auto",
@@ -104,12 +116,12 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
           {messages.length === 0 && (
             <Typography
               variant="body2"
-              color="textPrimary"
+              color="textSecondary"
               textAlign="center"
               sx={{ mt: 4, px: 2 }}
             >
-              Hi there! 👋 Curious about our menu? Try asking about new dishes,
-              promos, vegan 🌽, or something spicy 🌶️!
+              Hi there! 👋 Curious about our menu? Try asking about vegan 🌽 or
+              spicy 🌶️ dishes!
             </Typography>
           )}
           {messages.map((msg, i) => (
@@ -128,10 +140,9 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
                   color: msg.role === "user" ? "white" : "text.primary",
                   boxShadow: 1,
                   "& p": { m: 0 },
-                  "& ul, & ol": { pl: 2, m: 0 },
                 }}
               >
-                <ReactMarkdown skipHtml>{msg.text}</ReactMarkdown>
+                <ReactMarkdown>{msg.text}</ReactMarkdown>
               </Paper>
             </Box>
           ))}
@@ -148,9 +159,22 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
           onKeyDown={handleKeyDown}
           autoComplete="off"
           slotProps={{
+            input: {
+              endAdornment: input && (
+                <InputAdornment position="end">
+                  <IconButton
+                    size="small"
+                    onClick={() => setInput("")}
+                    sx={{ p: 0.5 }}
+                  >
+                    <CircleX size={16} color="#9e9e9e" />
+                  </IconButton>
+                </InputAdornment>
+              ),
+              sx: { borderRadius: 3 },
+            },
             htmlInput: { maxLength: 200 },
           }}
-          sx={{ "& .MuiOutlinedInput-root": { borderRadius: 3 } }}
         />
         <Button
           onClick={handleSend}
@@ -162,9 +186,7 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
             borderRadius: 3,
             background: "linear-gradient(135deg, #FF5F6D 0%, #FFC371 100%)",
             color: "white",
-            "&.Mui-disabled": {
-              background: "#ebedee",
-            },
+            "&.Mui-disabled": { background: "#ebedee" },
           }}
         >
           {isLoading ? (
