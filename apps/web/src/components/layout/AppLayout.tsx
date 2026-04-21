@@ -159,6 +159,7 @@
 //   );
 // }
 import { Link as RouterLink, Outlet, useLocation } from "react-router-dom";
+import { useState } from "react";
 import {
   AppBar,
   Box,
@@ -167,17 +168,18 @@ import {
   Container,
   Toolbar,
   Typography,
-  IconButton, // Додано
-  Tooltip, // Додано
 } from "@mui/material";
-import { ShoppingCart, Store, History, MessageCircle } from "lucide-react"; // Додано MessageCircle
+import { ShoppingCart, Store, History, Bot } from "lucide-react"; 
 import { useAppSelector } from "../../store/hooks";
+import { AiChatModal } from "../common/aimodal/AiChatModal";
 import logo from "../../assets/logo.svg";
 
 export function AppLayout() {
   const location = useLocation();
   const cartItems = useAppSelector((s) => s.cart.items);
   const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  const [isAiOpen, setIsAiOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -237,11 +239,28 @@ export function AppLayout() {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: { xs: "center", sm: "flex-end" },
-              alignItems: "center", // Додано для вирівнювання іконки по центру кнопок
               width: { xs: "100%", sm: "auto" },
               gap: { xs: 0.5, sm: 1 },
             }}
           >
+            <Button
+              onClick={() => setIsAiOpen(true)}
+              startIcon={<Bot size={18} />}
+              sx={{
+                fontWeight: 600,
+                borderRadius: 2,
+                background: "linear-gradient(135deg, #FF5F6D 0%, #FFC371 100%)",
+                color: "white",
+                px: 2,
+                boxShadow: "0 2px 4px rgba(253, 82, 96, 0.12)",
+                "&:hover": {
+                  opacity: 0.9,
+                  transform: "translateY(-1px)",
+                },
+              }}
+            >
+              AI chat
+            </Button>
             <Button
               component={RouterLink}
               to="/"
@@ -251,7 +270,7 @@ export function AppLayout() {
                 fontWeight: isActive("/") ? 600 : 500,
                 borderRadius: 2,
                 bgcolor: isActive("/")
-                  ? "rgba(211, 47, 47, 0.04)"
+                  ? "rgba(253, 82, 96, 0.12)"
                   : "transparent",
               }}
             >
@@ -266,7 +285,7 @@ export function AppLayout() {
                 fontWeight: isActive("/cart") ? 600 : 500,
                 borderRadius: 2,
                 bgcolor: isActive("/cart")
-                  ? "rgba(211, 47, 47, 0.04)"
+                  ? "rgba(253, 82, 96, 0.12)"
                   : "transparent",
               }}
             >
@@ -300,31 +319,12 @@ export function AppLayout() {
                 fontWeight: isActive("/orders") ? 600 : 500,
                 borderRadius: 2,
                 bgcolor: isActive("/orders")
-                  ? "rgba(211, 47, 47, 0.04)"
+                  ? "rgba(253, 82, 96, 0.12)"
                   : "transparent",
               }}
             >
               Orders
             </Button>
-
-            {/* Кнопка ШІ Помічника */}
-            <Tooltip title="Ask AI Assistant">
-              <IconButton
-                href="https://t.me/olena_food_service_bot"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  color: "#26A5E4", // Фірмовий колір Telegram
-                  ml: { sm: 1 },
-                  bgcolor: "rgba(38, 165, 228, 0.04)",
-                  "&:hover": {
-                    bgcolor: "rgba(38, 165, 228, 0.12)",
-                  },
-                }}
-              >
-                <MessageCircle size={22} />
-              </IconButton>
-            </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>
@@ -336,6 +336,8 @@ export function AppLayout() {
       >
         <Outlet />
       </Container>
+
+      <AiChatModal open={isAiOpen} onClose={() => setIsAiOpen(false)} />
     </Box>
   );
 }
