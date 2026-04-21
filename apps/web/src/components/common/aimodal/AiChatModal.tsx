@@ -39,16 +39,16 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE}/api/ai/chat`, {
+      const response = await fetch(`${API_BASE}/api/ai/assistant`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: userText }),
+        body: JSON.stringify({ question: userText }),
       });
 
       if (!response.ok) throw new Error();
 
-      const data = await response.text();
-      setMessages((prev) => [...prev, { role: "ai", text: data }]);
+      const data = await response.json();
+      setMessages((prev) => [...prev, { role: "ai", text: data.answer }]);
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -58,7 +58,6 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
       setIsLoading(false);
     }
   };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -86,7 +85,7 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
           <Bot size={24} color="#fd5260" />
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: "#fd5260" }}>
             Foodie AI Assistant
           </Typography>
         </Box>
@@ -116,7 +115,7 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
           {messages.length === 0 && (
             <Typography
               variant="body2"
-              color="text.secondary"
+              color="textPrimary"
               textAlign="center"
               sx={{ mt: 4, px: 2 }}
             >
@@ -188,4 +187,4 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
       </DialogActions>
     </Dialog>
   );
-};
+};;
