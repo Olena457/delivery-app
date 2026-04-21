@@ -12,8 +12,9 @@ import {
   Paper,
   CircularProgress,
   InputAdornment,
+  Tooltip,
 } from "@mui/material";
-import { Bot, X, Send, CircleX } from "lucide-react";
+import { Bot, X, Send, CircleX, Trash2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import FadeTransition from "../../transitions/FadeTransition";
 import { useAskAiMutation } from "../../../store/api/shopApi";
@@ -65,6 +66,10 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
     }
   };
 
+  const handleClearChat = () => {
+    setMessages([]);
+  };
+
   return (
     <Dialog
       open={open}
@@ -89,9 +94,23 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
             Foodie AI Assistant
           </Typography>
         </Box>
-        <IconButton onClick={onClose} size="small">
-          <X size={20} />
-        </IconButton>
+
+        <Box sx={{ display: "flex", gap: 1 }}>
+          {messages.length > 0 && (
+            <Tooltip title="Clear chat">
+              <IconButton
+                onClick={handleClearChat}
+                size="small"
+                sx={{ color: "text.secondary" }}
+              >
+                <Trash2 size={18} />
+              </IconButton>
+            </Tooltip>
+          )}
+          <IconButton onClick={onClose} size="small">
+            <X size={20} />
+          </IconButton>
+        </Box>
       </DialogTitle>
 
       <DialogContent
@@ -116,12 +135,13 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
           {messages.length === 0 && (
             <Typography
               variant="body2"
-              color="textSecondary"
+              color="textPrimary"
               textAlign="center"
+              fontSize={20}
               sx={{ mt: 4, px: 2 }}
             >
-              Hi there! 👋 Curious about our menu? Try asking about vegan 🌽 or
-              spicy 🌶️ dishes!
+              Hi there! 👋Curious about our menu? Try asking about new dishes,
+              sugar-free options, promos, vegan 🌽, or something spicy 🌶️!"
             </Typography>
           )}
           {messages.map((msg, i) => (
