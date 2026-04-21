@@ -92,7 +92,7 @@ export const shopApi = createApi({
       }),
       providesTags: ["Orders"],
     }),
-    
+
     createOrder: builder.mutation<OrderHistoryItem, CreateOrderDto>({
       query: (body) => ({
         url: "/orders",
@@ -143,6 +143,13 @@ export const shopApi = createApi({
         body,
       }),
     }),
+    askAi: builder.mutation<{ answer: string }, { question: string }>({
+      query: (body) => ({
+        url: "/ai/assistant",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -159,4 +166,5 @@ export const {
   useDeleteOrderMutation,
   useRequestCodeMutation,
   useVerifyCodeMutation,
+  useAskAiMutation,
 } = shopApi;

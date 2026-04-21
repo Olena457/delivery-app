@@ -15,8 +15,7 @@ import {
 import { Bot, X, Send } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import FadeTransition from "../../transitions/FadeTransition";
-
-const API_BASE = import.meta.env.VITE_API_URL || "";
+import { useAskAiMutation } from "../../../store/api/shopApi";
 
 interface AiChatModalProps {
   open: boolean;
@@ -28,7 +27,7 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
   const [messages, setMessages] = useState<
     { role: "user" | "ai"; text: string }[]
   >([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [askAi, { isLoading }] = useAskAiMutation();
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -36,28 +35,18 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
     const userText = input.trim();
     setMessages((prev) => [...prev, { role: "user", text: userText }]);
     setInput("");
-    setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE}/api/ai/assistant`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: userText }),
-      });
-
-      if (!response.ok) throw new Error();
-
-      const data = await response.json();
-      setMessages((prev) => [...prev, { role: "ai", text: data.answer }]);
+      const response = await askAi({ question: userText }).unwrap();
+      setMessages((prev) => [...prev, { role: "ai", text: response.answer }]);
     } catch {
       setMessages((prev) => [
         ...prev,
         { role: "ai", text: "Connection error. Please try again later! 🌶️" },
       ]);
-    } finally {
-      setIsLoading(false);
     }
   };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -187,4 +176,4 @@ export const AiChatModal: React.FC<AiChatModalProps> = ({ open, onClose }) => {
       </DialogActions>
     </Dialog>
   );
-};;
+};
