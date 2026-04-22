@@ -30,10 +30,11 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 - **Responsive Design:** Fully adapted for Desktop, Tablet, and Mobile devices.
 - **Database Seeding:** Automated generation of 330+ realistic products and reviews using Faker/loremflickr.
 - **Swager Documentation:** Implement automatic generation of API documentation to simplify and streamline testing.
-
+- **AI Assistant Chat:** An intelligent AI agent integrated into the chat to help users discover dishes. 
 ---
 
 ##  Technology Stack
+
 
 ### Frontend (Client)
 
@@ -51,6 +52,10 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 * **Swagger API** : Automated API documentation.
 * **Faker.js** : For generating high-quality seed data.
 * **Resend Email Service**: For sending verification code.
+* **AI Integration**:A specialized AI assistant designed to enhance user engagement and simplify food discovery.
+* **Smart Search Agent**: 
+* **Tag-Based Filtering**: Fast search using specific attributes such as `Sugar-free`, `Spicy`, `Vegan`, `New Arrival`, `Promotion`, and `In Stock`.
+* **Contextual Support**: Beyond filtering, the agent can answer various questions regarding dish ingredients, recommendations, and general menu inquiries.
 
 ---
 
