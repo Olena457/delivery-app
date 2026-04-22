@@ -24,31 +24,28 @@ export class AiService {
   constructor(private prisma: PrismaService) {}
 
   async generateResponse(question: string): Promise<string> {
-    const fallbackMessage = 'Вибачте, сталася помилка зʼєднання. 🛠️';
+    const fallbackMessage = 'Sorry, an error occurred. Please try again later';
 
     try {
-      // 1. Отримуємо більше продуктів, щоб збільшити шанс знайти теги (наприклад, 20)
       const products = await this.prisma.product.findMany({
         where: { isAvailable: true },
         include: {
           shop: true,
           category: true,
         },
-        take: 20,
+        take: 15,
       });
 
-      // 2. ФОРМУЄМО ДАНІ З ТЕГАМИ (Це найважливіша зміна!)
+      // 2. create a structured context for the AI
       const productContext = products.map((p) => ({
         name: p.title,
         price: `${p.price} UAH`,
         category: p.category.name,
         shop: p.shop.name,
         description: p.description || '',
-        // Додаємо характеристики, щоб ШІ міг за ними фільтрувати
         characteristics: p.tags ? p.tags.split(',') : [],
       }));
 
-      // 3. ФОРМУЄМО СИСТЕМНУ ІНСТРУКЦІЮ (копіюємо логіку з твого старого коду)
       const systemInstruction = `
         Identity: You are a professional Food Delivery Assistant. 
         Context: Today is ${new Date().toLocaleDateString()}.
@@ -68,7 +65,6 @@ export class AiService {
         5. STYLE: Bold **Shop Names** and **Prices**. Use lists for results.
       `;
 
-      // 4. ВІДПРАВЛЯЄМО ЗАПИТ ДО MISTRAL
       const res = await fetch(this.apiUrl, {
         method: 'POST',
         headers: {

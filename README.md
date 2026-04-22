@@ -52,10 +52,10 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 * **Swagger API** : Automated API documentation.
 * **Faker.js** : For generating high-quality seed data.
 * **Resend Email Service**: For sending verification code.
-* **AI Integration**:A specialized AI assistant designed to enhance user engagement and simplify food discovery.
-* **Smart Search Agent**: 
+* **Mistral AI Model (`open-mistral-7b`)**: Integrated high-performance LLM to power the conversational interface.
+* **AI Integration**: 
 * **Tag-Based Filtering**: Fast search using specific attributes such as `Sugar-free`, `Spicy`, `Vegan`, `New Arrival`, `Promotion`, and `In Stock`.
-* **Contextual Support**: Beyond filtering, the agent can answer various questions regarding dish ingredients, recommendations, and general menu inquiries.
+* **Contextual Support**:A specialized AI assistant designed to enhance user engagement and simplify food discovery.
 
 ---
 
