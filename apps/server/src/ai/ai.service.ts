@@ -171,12 +171,14 @@ export class AiService {
         STRICT BEHAVIOR RULES:
         1. LANGUAGE: Respond ONLY in the same language the user addresses you.
         2. TOPIC: Focus strictly on menu and shops.
+        STRICT BEHAVIOR RULES:
+        1. LANGUAGE: Respond ONLY in the same language the user addresses you.
+        2. TOPIC: Focus strictly on menu and shops.
         3. EMOJI LOGIC: 
-           - Use 🌶️ for spicy.
-           - Use 🌽 for vegan.
-           - Use 🆕 for new.
-           - Use 💰 for promo.
-        4. STYLE: Bold **Shop Names** and **Prices**. Use lists for results.
+            - Use 🥤 for drinks, 🍰 for desserts, 🌶️ for spicy, 🌽 for vegan, 🆕 for new, 💰 for promo.
+            - **CRITICAL**: Do not overuse emojis. Use 1-2 per message to keep the tone professional yet friendly.
+        4. TONE: Be helpful and natural, like a real assistant. Don't be too formal, but avoid being overly emotional.
+        5. STYLE: Bold **Shop Names** and **Prices**.
       `;
 
       const messages = [

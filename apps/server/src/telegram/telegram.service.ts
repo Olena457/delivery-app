@@ -21,36 +21,59 @@ export class TelegramService {
 
   async processUpdate(update: TelegramUpdateDto) {
     const message = update.message;
-
     if (!message || !message.text) return;
 
     const chatId = message.chat.id.toString();
 
-    const lastMessages = await this.prisma.telegramMessage.findMany({
-      where: { chatId: chatId },
-      take: 5,
-      orderBy: { createdAt: 'desc' },
-    });
+    try {
+      const lastMessages = await this.prisma.telegramMessage.findMany({
+        where: { chatId },
+        take: 6,
+        orderBy: { createdAt: 'desc' },
+      });
 
-    const history = lastMessages.reverse().map((m) => ({
-      role: m.role as 'user' | 'assistant',
-      content: m.content,
-    }));
+      const history = lastMessages.reverse().map((m) => ({
+        role: m.role as 'user' | 'assistant',
+        content: m.content,
+      }));
 
-    const aiAnswer = await this.aiService.generateTelegramResponse(
-      message.text,
-      history,
-    );
+      const aiAnswer = await this.aiService.generateTelegramResponse(
+        message.text,
+        history,
+      );
 
-    await this.prisma.telegramMessage.createMany({
-      data: [
-        { chatId, role: 'user', content: message.text },
-        { chatId, role: 'assistant', content: aiAnswer },
-      ],
-    });
+      await this.prisma.telegramMessage.createMany({
+        data: [
+          { chatId, role: 'user', content: message.text },
+          { chatId, role: 'assistant', content: aiAnswer },
+        ],
+      });
 
-    await this.bot.telegram.sendMessage(chatId, aiAnswer, {
-      parse_mode: 'Markdown',
-    });
+      const messagesToKeep = await this.prisma.telegramMessage.findMany({
+        where: { chatId },
+        orderBy: { createdAt: 'desc' },
+        take: 10,
+        select: { id: true },
+      });
+
+      const idsToKeep = messagesToKeep.map((m) => m.id);
+
+      await this.prisma.telegramMessage.deleteMany({
+        where: {
+          chatId,
+          id: { notIn: idsToKeep },
+        },
+      });
+
+      await this.bot.telegram.sendMessage(chatId, aiAnswer, {
+        parse_mode: 'Markdown',
+      });
+    } catch (error) {
+      console.error('Error in TelegramService:', error);
+      await this.bot.telegram.sendMessage(
+        chatId,
+        'Sorry, an error occurred. Please try again later.😞',
+      );
+    }
   }
 }
