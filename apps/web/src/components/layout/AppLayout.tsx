@@ -1,4 +1,3 @@
-
 import { Link as RouterLink, Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
@@ -10,9 +9,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { ShoppingCart, Store, History, Bot } from "lucide-react"; 
+import { ShoppingCart, Store, History } from "lucide-react";
 import { useAppSelector } from "../../store/hooks";
 import { AiChatModal } from "../common/aimodal/AiChatModal";
+import { TelegramBotButton } from "../common/telegram/TelegramBotButton"; 
+import { AiChatButton } from "../common/aibutton/AiChatButton";
 import logo from "../../assets/logo.svg";
 
 export function AppLayout() {
@@ -43,6 +44,7 @@ export function AppLayout() {
             gap: { xs: 1, sm: 0 },
           }}
         >
+          {/* Logo Section */}
           <Typography
             variant="h6"
             component={RouterLink}
@@ -52,7 +54,14 @@ export function AppLayout() {
               textDecoration: "none",
               width: { xs: "100%", sm: "auto" },
               textAlign: { xs: "center", sm: "left" },
-              fontSize: { xs: "1.25rem", sm: "1.5rem" },
+              fontSize: {
+                xs: "1.1rem",
+                sm: "1.2rem",
+                md: "1.4rem",
+                lg: "1.5rem",
+              },
+              whiteSpace: "nowrap",
+              flexShrink: 1,
               display: "flex",
               alignItems: "center",
               justifyContent: { xs: "center", sm: "flex-start" },
@@ -68,7 +77,7 @@ export function AppLayout() {
               src={logo}
               alt="Logo"
               sx={{
-                width: { xs: 32, md: 48 },
+                width: { xs: 20, sm: 22, md: 32 },
                 height: "auto",
               }}
             />
@@ -84,24 +93,9 @@ export function AppLayout() {
               gap: { xs: 0.5, sm: 1 },
             }}
           >
-            <Button
-              onClick={() => setIsAiOpen(true)}
-              startIcon={<Bot size={18} />}
-              sx={{
-                fontWeight: 600,
-                borderRadius: 2,
-                background: "linear-gradient(135deg, #FF5F6D 0%, #FFC371 100%)",
-                color: "white",
-                px: 2,
-                boxShadow: "0 2px 4px rgba(253, 82, 96, 0.12)",
-                "&:hover": {
-                  opacity: 0.9,
-                  transform: "translateY(-1px)",
-                },
-              }}
-            >
-              AI chat
-            </Button>
+            <AiChatButton onClick={() => setIsAiOpen(true)} />
+            <TelegramBotButton />
+
             <Button
               component={RouterLink}
               to="/"
@@ -113,6 +107,7 @@ export function AppLayout() {
                 bgcolor: isActive("/")
                   ? "rgba(253, 82, 96, 0.12)"
                   : "transparent",
+                textTransform: "none",
               }}
             >
               Shops
@@ -128,6 +123,7 @@ export function AppLayout() {
                 bgcolor: isActive("/cart")
                   ? "rgba(253, 82, 96, 0.12)"
                   : "transparent",
+                textTransform: "none",
               }}
             >
               <Badge
@@ -162,6 +158,7 @@ export function AppLayout() {
                 bgcolor: isActive("/orders")
                   ? "rgba(253, 82, 96, 0.12)"
                   : "transparent",
+                textTransform: "none",
               }}
             >
               Orders
@@ -170,6 +167,7 @@ export function AppLayout() {
         </Toolbar>
       </AppBar>
 
+      {/* Main Content */}
       <Container
         component="main"
         maxWidth="xl"
@@ -178,6 +176,7 @@ export function AppLayout() {
         <Outlet />
       </Container>
 
+      {/* AI Modal */}
       <AiChatModal open={isAiOpen} onClose={() => setIsAiOpen(false)} />
     </Box>
   );
