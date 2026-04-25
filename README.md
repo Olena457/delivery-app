@@ -7,20 +7,20 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 ---
 
 <div style="display: flex; flex-wrap: wrap; gap: 2px;">
-  <img src="apps/web/public/cart.jpg" width="33%" height="132px" alt="card"/>
-  <img src="apps/web/public/deli.jpg" width="33%" height="132px" alt="product"/>
-  <img src="apps/web/public/clear.jpg" width="33%" height="132px" alt="clear"/>
-  <img src="apps/web/public/swager.jpg" width="33%" height="132px" alt="swager"/>
-  <img src="apps/web/public/order.jpg" width="33%" height="132px" alt="order"/>
-  <img src="apps/web/public/enter.jpg" width="33%" height="132px" alt="enter"/>
-  <img src="apps/web/public/verification.jpg" width="33%" height="132px" alt="verification"/>
-  <img src="apps/web/public/history.jpg"width="33%" height="132px" alt="history"/>
-  <img src="apps/web/public/code.jpg" width="33%" height="132px" alt="code"/>
-  <img src="apps/web/public/reorder.jpg" width="33%" height="132px" alt="reorder"/>
-  <img src="apps/web/public/telegram.jpg" width="33%" height="132px" alt="telegram"/>
-  <img src="apps/web/public/telegram-1.jpg" width="33%" height="132px" alt="telegram"/>
-  <img src="apps/web/public/assistant.jpg" width="33%" height="132px" alt="assistant"/>
-  <img src="apps/web/public/assistant-1.jpg" width="33%" height="132px" alt="assistant"/>
+  <img src="apps/web/public/cart.jpg" width="30%" height="132px" alt="card"/>
+  <img src="apps/web/public/deli.jpg" width="30%" height="132px" alt="product"/>
+  <img src="apps/web/public/clear.jpg" width="30%" height="132px" alt="clear"/>
+  <img src="apps/web/public/swager.jpg" width="30%" height="132px" alt="swager"/>
+  <img src="apps/web/public/order.jpg" width="30%" height="132px" alt="order"/>
+  <img src="apps/web/public/enter.jpg" width="30%" height="132px" alt="enter"/>
+  <img src="apps/web/public/verification.jpg" width="30%" height="132px" alt="verification"/>
+  <img src="apps/web/public/history.jpg"width="30%" height="132px" alt="history"/>
+  <img src="apps/web/public/code.jpg" width="30%" height="132px" alt="code"/>
+  <img src="apps/web/public/reorder.jpg" width="30%" height="132px" alt="reorder"/>
+  <img src="apps/web/public/telegram.jpg" width="30%" height="132px" alt="telegram"/>
+  <img src="apps/web/public/telegram-1.jpg" width="30%" height="132px" alt="telegram"/>
+  <img src="apps/web/public/assistant.jpg" width="30%" height="132px" alt="assistant"/>
+  <img src="apps/web/public/assistant-1.jpg" width="30%" height="132px" alt="assistant"/>
 </div>
 
 ---
@@ -32,7 +32,7 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 - **Dynamic Product Filtering:** Filter items by category (Main Dishes, Desserts, Drinks) and shop rating.
 - **Real-time Order History:** Search orders by email and phone with the ability to **Reorder** previous items.
 - **Responsive Design:** Fully adapted for Desktop, Tablet, and Mobile devices.
-- **Database Seeding:** Automated generation of 330+ realistic products and reviews using Faker/loremflickr.
+- **Database Seeding:** Automated generation of 300+ realistic products and reviews using Faker/loremflickr.
 - **Swager Documentation:** Implement automatic generation of API documentation to simplify and streamline testing.
 - **AI Assistant Chat:** An intelligent AI agent integrated into the chat to help users discover dishes. 
 - **Telegram Bot** : An omnichannel communication layer using Webhook architecture to ensure near-zero latency and efficient resource management.
