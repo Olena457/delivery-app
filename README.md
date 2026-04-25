@@ -6,7 +6,7 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 
 ---
 
-<div style="display: flex; flex-wrap: wrap; gap: 15px;">
+<div style="display: flex; flex-wrap: wrap; gap: 2px;">
   <img src="apps/web/public/cart.jpg" width="33%" height="132px" alt="card"/>
   <img src="apps/web/public/deli.jpg" width="33%" height="132px" alt="product"/>
   <img src="apps/web/public/clear.jpg" width="33%" height="132px" alt="clear"/>
@@ -17,6 +17,10 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
   <img src="apps/web/public/history.jpg"width="33%" height="132px" alt="history"/>
   <img src="apps/web/public/code.jpg" width="33%" height="132px" alt="code"/>
   <img src="apps/web/public/reorder.jpg" width="33%" height="132px" alt="reorder"/>
+  <img src="apps/web/public/telegram.jpg" width="33%" height="132px" alt="telegram"/>
+  <img src="apps/web/public/telegram-1.jpg" width="33%" height="132px" alt="telegram"/>
+  <img src="apps/web/public/assistant.jpg" width="33%" height="132px" alt="assistant"/>
+  <img src="apps/web/public/assistant-1.jpg" width="33%" height="132px" alt="assistant"/>
 </div>
 
 ---
@@ -31,6 +35,7 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 - **Database Seeding:** Automated generation of 330+ realistic products and reviews using Faker/loremflickr.
 - **Swager Documentation:** Implement automatic generation of API documentation to simplify and streamline testing.
 - **AI Assistant Chat:** An intelligent AI agent integrated into the chat to help users discover dishes. 
+- **Telegram Bot** : An omnichannel communication layer using Webhook architecture to ensure near-zero latency and efficient resource management.
 ---
 
 ##  Technology Stack
@@ -56,6 +61,7 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
 * **AI Integration**: 
 * **Tag-Based Filtering**: Fast search using specific attributes such as `Sugar-free`, `Spicy`, `Vegan`, `New Arrival`, `Promotion`, and `In Stock`.
 * **Contextual Support**:A specialized AI assistant designed to enhance user engagement and simplify food discovery.
+* **Telegraf**: A powerful Node.js framework for Telegram bots, integrated via Webhooks for high-performance, event-driven communication within the NestJS ecosystem.
 
 ---
 
