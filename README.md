@@ -21,6 +21,7 @@ _A modern, full-stack food ordering and delivery platform built with a focus on 
   <img src="apps/web/public/telegram-1.jpg" width="30%" height="132px" alt="telegram"/>
   <img src="apps/web/public/assistant.jpg" width="30%" height="132px" alt="assistant"/>
   <img src="apps/web/public/assistant-1.jpg" width="30%" height="132px" alt="assistant"/>
+  <img src="apps/web/public/bot.jpg" width="30%" height="132px" alt="bot"/>
 </div>
 
 ---
